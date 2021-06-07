@@ -1,4 +1,5 @@
 import pywikibot
+from bs4 import BeautifulSoup
 from pywikibot import pagegenerators
 import base_import_script as import_script
 
