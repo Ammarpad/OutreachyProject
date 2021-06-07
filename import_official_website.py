@@ -1,3 +1,5 @@
+import re
+
 import pywikibot
 from bs4 import BeautifulSoup
 from pywikibot import pagegenerators
@@ -22,19 +24,20 @@ def do_import():
             continue
 
         website = extract_weblink(page)
+        print("Found %s for %s:", website, page.title())
 
     if len(no_data):
         import_script.record_pages_without_items(no_data, 'missing-data-items-list')
 
 def extract_weblink(page):
     page_source = page.expand_text(True)
-    html = BeautifulSoup(page_source)
-    link = html.findAll('span', {'class':'url', 'class':'official-website'})
+    html = BeautifulSoup(page_source, features='html.parser')
+    items = html.findAll('span', {'class':'url', 'class':'official-website'})
 
     if not items or len(items) != 1:
         return None
 
-    return re.findall(URL_REGEX, link)[0]
+    return re.findall(URL_REGEX, items)[0]
 
 if __name__ == '__main__':
     do_import()
