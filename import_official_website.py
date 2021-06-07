@@ -27,8 +27,8 @@ def do_import():
         website = extract_weblink(page)
 
         if website:
-            data.append(website, data_item)
-            print("Found %s for %s:", website, page.title())
+            data.append([website, data_item])
+            print("Found %s for %s:" %(website, page.title()))
         else:
             print("Cannot extract website for %s. Either there's none or there " +
                 "are multiple and it's unclear which one is official" % page.title())
@@ -36,7 +36,7 @@ def do_import():
     if len(no_data_item):
         import_script.record_pages_without_items(no_data, 'missing-data-items-list')
 
-    result = import_script.add_claims_to_item(repo, data, OFFICIAL_WEBSITE_PROPERTY, summary='')
+    #result = import_script.add_claims_to_item(repo, data, OFFICIAL_WEBSITE_PROPERTY, summary='')
 
 def extract_weblink(page):
     page_source = page.expand_text(True)
@@ -46,7 +46,7 @@ def extract_weblink(page):
     if not items or len(items) != 1:
         return None
 
-    return re.findall(URL_REGEX, items)[0]
+    return re.findall(URL_REGEX, str(items))[0]
 
 if __name__ == '__main__':
     do_import()
