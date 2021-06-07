@@ -25,8 +25,13 @@ def do_import():
             continue
 
         website = extract_weblink(page)
-        data.append(website, data_item)
-        print("Found %s for %s:", website, page.title())
+
+        if website:
+            data.append(website, data_item)
+            print("Found %s for %s:", website, page.title())
+        else:
+            print("Cannot extract website for %s. Either there's none or there " +
+                "are multiple and it's unclear which one is official" % page.title())
 
     if len(no_data_item):
         import_script.record_pages_without_items(no_data, 'missing-data-items-list')
