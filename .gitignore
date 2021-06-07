@@ -1,4 +1,4 @@
-__pycache__/
 *.py[cod]
 *$py.class
-local
+__local__/
+__pycache__/
