@@ -13,6 +13,7 @@ def do_import():
     repo = en_wiki.data_repository()
     catObj = pywikibot.Category(en_wiki, cat)
     data = no_data_item = list()
+    summary = 'Adding release-group id'
 
     pages = pagegenerators.CategorizedPageGenerator(catObj, recurse=False)
     for page in pages:
@@ -32,9 +33,11 @@ def do_import():
             print('There\'s a problem with %s' % page.title())
 
     if len(no_data_item):
-        import_script.record_pages_without_items(no_data, 'missing-data-items-list')
+        import_script.record_pages_without_items(no_data, 'missing-data-items-list-mb')
 
-    result = import_script.add_claims_to_item(repo, data, MusicBrainz, summary='')
+    result = import_script.add_claims_to_item(repo, data, MusicBrainz, summary=summary)
+
+    print("Finished. Imported %s pages, %s were skipped" %(result['added'], result['skipped']))
 
 def get_link(page):
     # Redirects
@@ -43,11 +46,11 @@ def get_link(page):
     
     templates = page.templatesWithParams()
     
-    f = lambda t: t == 'Template:MusicBrainz release group' or t in temps
+    func = lambda t: t == 'Template:MusicBrainz release group' or t in temps
     
-    link = False
+    link = None
     for t in templates:
-        if f(t[0].title()):
+        if func(t[0].title()):
             link = re.findall(REGEX, t[1][0])
             break
 
