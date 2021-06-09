@@ -36,7 +36,9 @@ def do_import():
     if len(no_data_item):
         import_script.record_pages_without_items(no_data, 'missing-data-items-list')
 
-    #result = import_script.add_claims_to_item(repo, data, OFFICIAL_WEBSITE_PROPERTY, summary='')
+    result = import_script.add_claims_to_item(repo, data, OFFICIAL_WEBSITE_PROPERTY, summary='')
+
+    print("Finished. Imported %s pages, %s were skipped" %(result['added'], result['skipped']))
 
 def extract_weblink(page):
     page_source = page.expand_text(True)
