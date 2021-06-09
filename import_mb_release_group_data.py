@@ -47,11 +47,11 @@ def get_link(page):
     
     link = False
     for t in templates:
-        if f(t[0]):
-            link = re.findall(REGEX, t[1])[0]
+        if f(t[0].title()):
+            link = re.findall(REGEX, t[1][0])
             break
 
-    return link
+    return link[0] if link else link
 
 if __name__ == '__main__':
     do_import()
