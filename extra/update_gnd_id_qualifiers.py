@@ -22,13 +22,19 @@ def main(limit):
     items = pg.WikidataSPARQLPageGenerator(query, site=REPO)
 
     count = 0
-    for item in items:
-        item_data = item.get()
-        for claim in item_data['claims'][GND_ID]:
-            for q in claim.qualifiers[STATED_AS]:
-                updateQualifier(claim, q)
-                count += 1
+    try:
+        for item in items:
+            item_data = item.get()
+            for claim in item.claims[GND_ID]:
+                for qual in claim.qualifiers[STATED_AS]:
+                    updateQualifier(claim, qual)
+                    count += 1
 
+                    if count == limit:
+                        raise StopIteration
+    except StopIteration:
+        print('Finished. %s items updated.' % count)
+    
 def updateQualifier(claim, qual):
     val = getTargetVal(claim.target)
     retrieved = True 
@@ -70,5 +76,4 @@ def getTargetVal(id):
 
 if __name__ == '__main__':
     limit = int(sys.argv[1])
-
     main(limit)
