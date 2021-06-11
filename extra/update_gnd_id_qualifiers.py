@@ -22,7 +22,6 @@ def main(limit):
       '?statement pq:P1932 ?stated.' \
     '}'
     items = pg.WikidataSPARQLPageGenerator(query, site=REPO)
-
     count = 0
     try:
         for item in items:
@@ -46,16 +45,15 @@ def updateQualifier(claim, qual):
         retrieved = False
 
     claim.removeQualifier(qual, summary='')
-    summary = "{{P|%s}} -> {{P|%s}}" %(STATED_AS, NAMED_AS)
 
     qualifier = pywikibot.Claim(REPO, NAMED_AS)
     qualifier.setTarget(val)
-    claim.addQualifier(qualifier, summary=summary)
+    claim.addQualifier(qualifier, summary='')
 
     if retrieved:
         retrieved = pywikibot.Claim(REPO, RETRIEVED)
-        reference.setTarget(pywikibot.WbTime(date.today()) )
-        claim.addSource(retrieved, summary='')
+        retrieved.setTarget(pywikibot.WbTime(date.today()) )
+        claim.addSource(retrieved)
 
 def getTargetVal(id):
     val = None
