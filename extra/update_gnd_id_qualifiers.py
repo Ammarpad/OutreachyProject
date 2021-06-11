@@ -3,6 +3,7 @@
 import sys
 import requests
 import pywikibot
+from datetime import date
 from pywikibot import pagegenerators as pg 
 
 GND_ID = 'P227'
@@ -45,10 +46,11 @@ def updateQualifier(claim, qual):
         retrieved = False
 
     claim.removeQualifier(qual, summary='')
+    summary = "{{P|%s}} -> {{P|%s}}" %(STATED_AS, NAMED_AS)
 
     qualifier = pywikibot.Claim(REPO, NAMED_AS)
     qualifier.setTarget(val)
-    claim.addQualifier(qualifier, summary='')
+    claim.addQualifier(qualifier, summary=summary)
 
     if retrieved:
         retrieved = pywikibot.Claim(REPO, RETRIEVED)
