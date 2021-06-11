@@ -12,6 +12,7 @@ RETRIEVED = 'P813'
 SITE = pywikibot.Site('wikidata', 'wikidata')
 REPO = SITE.data_repository()
 SESSION = requests.Session()
+entityfacts = 'https://hub.culturegraph.org/entityfacts/'
 
 def main(limit):
     query = 'SELECT ?item ?stated WHERE {' \
@@ -24,7 +25,7 @@ def main(limit):
     count = 0
     try:
         for item in items:
-            item_data = item.get()
+            item.get()
             for claim in item.claims[GND_ID]:
                 for qual in claim.qualifiers[STATED_AS]:
                     updateQualifier(claim, qual)
@@ -38,14 +39,10 @@ def main(limit):
 def updateQualifier(claim, qual):
     val = getTargetVal(claim.target)
     retrieved = True 
-    print( '1 => %s' % val )
+
     if not val:
         val = qual.target
         retrieved = False
-    print( '2 => %s' % val )
-    print( '3 => %s' % qual.target)
-    print( '4 => %s' % 'd')
-    return
 
     claim.removeQualifier(qual, summary='')
 
@@ -59,17 +56,14 @@ def updateQualifier(claim, qual):
         claim.addSource(retrieved, summary='')
 
 def getTargetVal(id):
-    print(id)
-    url = "https://hub.culturegraph.org/entityfacts/" + id
-
     val = None
-    result = SESSION.get(url)
+    result = SESSION.get(entityfacts + id)
     if result.status_code == 200:
         res = result.json()
         if res['@type'] == 'person':
-            p = res.get('prefix', None)
+            pref = res.get('prefix', None)
             val = '%s, %s' %(res['surname'], res['forename'])
-            val = ('%s, %s' %(val, p)) if p else val
+            val = ('%s %s' %(val, pref)) if pref else val
 
     return val
 
