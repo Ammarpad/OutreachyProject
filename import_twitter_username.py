@@ -56,8 +56,8 @@ def get_numeric_ids(usernames):
 
     params['usernames'] = ','.join(usernames)
     params['user.fields'] = ','.join(['id'])
-    headers['Authorization'] = 'Bearer %s' %credentials.twitter['bearar_token']
-    url = 'https://api.twitter.com/2/users/'
+    headers['Authorization'] = 'Bearer {}'.format(credentials.twitter['bearer_token'])
+    url = 'https://api.twitter.com/2/users/by?'
 
     response = SESSION.get(url, params=params, headers=headers)
 
