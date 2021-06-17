@@ -34,7 +34,7 @@ def main(limit):
                     if count == limit:
                         raise StopIteration
     except StopIteration:
-        print('Finished. %s items updated.' % count)
+        print('Finished. %s items updated.' %count)
     
 def updateQualifier(claim, qual):
     val = getTargetVal(claim.target)
