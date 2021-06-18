@@ -48,7 +48,7 @@ def updateQualifier(claim, qual):
     qualifier = pywikibot.Claim(REPO, NAMED_AS)
     qualifier.setTarget(val)
     qualifier.hash = qual.hash
-    claim.addQualifier(qualifier, summary='')
+    claim.addQualifier(qualifier, summary=summary)
 
     if retrieved:
         retrieved = pywikibot.Claim(REPO, RETRIEVED)
