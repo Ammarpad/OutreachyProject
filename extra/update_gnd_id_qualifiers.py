@@ -14,6 +14,7 @@ SITE = pywikibot.Site('wikidata', 'wikidata')
 REPO = SITE.data_repository()
 SESSION = requests.Session()
 entityfacts = 'https://hub.culturegraph.org/entityfacts/'
+summary = '([[Wikidata:Requests for permissions/Bot/AmmarpadBot|update GND ID qualifier]])'
 
 def main(limit):
     query = 'SELECT ?item ?stated WHERE {' \
@@ -44,10 +45,9 @@ def updateQualifier(claim, qual):
         val = qual.target
         retrieved = False
 
-    claim.removeQualifier(qual, summary='')
-
     qualifier = pywikibot.Claim(REPO, NAMED_AS)
     qualifier.setTarget(val)
+    qualifier.hash = qual.hash
     claim.addQualifier(qualifier, summary='')
 
     if retrieved:
