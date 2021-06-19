@@ -52,8 +52,11 @@ def updateQualifier(claim, qual):
 
     if retrieved:
         retrieved = pywikibot.Claim(REPO, RETRIEVED)
-        time = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-        retrieved.setTarget(pywikibot.WbTime.fromTimestr(time))
+        now = datetime.now()
+        date = dict(year=now.year,
+                    month=now.month,
+                    day=now.day)
+        retrieved.setTarget(pywikibot.WbTime(**date))
         claim.addSource(retrieved)
 
 def getTargetVal(id):
