@@ -29,9 +29,9 @@ def main(limit):
             item.get()
             for claim in item.claims[GND_ID]:
                 if STATED_AS in claim.qualifiers:
-                    qual = claim.qualifiers[STATED_AS]
-                    updateQualifier(claim, qual)
-                    count += 1
+                    for qual in claim.qualifiers[STATED_AS]:
+                        updateQualifier(claim, qual)
+                        count += 1
 
                     if count == limit:
                         raise StopIteration
@@ -52,7 +52,7 @@ def updateQualifier(claim, qual):
     claim.addQualifier(qualifier, summary=summary)
     target_changed = qual.target != qualifier.target
 
-    if retrieved and updated:
+    if retrieved and target_changed:
         retrieved = pywikibot.Claim(REPO, RETRIEVED)
         now = datetime.now()
         date = dict(year=now.year,
