@@ -50,7 +50,7 @@ def updateQualifier(claim, qual):
     qualifier.hash = qual.hash
     claim.addQualifier(qualifier, summary=summary)
 
-    if retrieved:
+    if retrieved and (qual.id != qualifier.id):
         retrieved = pywikibot.Claim(REPO, RETRIEVED)
         now = datetime.now()
         date = dict(year=now.year,
@@ -65,12 +65,16 @@ def getTargetVal(id):
     if result.status_code == 200:
         res = result.json()
         if res['@type'] == 'person':
-            pref = res.get('prefix', None)
-            val = '%s, %s' %(res['surname'], res['forename'])
+            pref = res.get('prefix', '')
+            sname = res.get('surname', '')
+            fname = res.get('forename', '')
+            if not fname or (fname and sname == ''):
+                return fname if fname else None
+
+            val = '%s, %s' %(fname, sname)
             val = ('%s %s' %(val, pref)) if pref else val
 
     return val
-
 
 if __name__ == '__main__':
     limit = int(sys.argv[1])
