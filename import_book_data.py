@@ -44,6 +44,15 @@ def get_page_num(page):
                     # editions, it's hard to programmatically
                     # extract these from free-form string
                     return None
+def sparqlq():
+    """SPARQL query alternative"""
+    return "SELECT ?item " \
+    "WHERE " \
+    "{" \
+      "VALUES ?type {wd:Q571 wd:Q7725634} " \
+      "?item wdt:P31 ?type " \
+      "MINUS { ?item wdt:P1104 [] }"\
+    "}"
 
 if __name__ == '__main__':
     limit = int(sys.argv[1])
