@@ -10,9 +10,10 @@ BOOK_TEMPLATE = 'Infobox book'
 
 def main(limit):
     site = pywikibot.Site('en', 'wikipedia')
+    repo = site.data_repository()
     page = pywikibot.Page(site, BOOK_TEMPLATE, ns=10)
     pages = page.getReferences(follow_redirects=False,
-                        only_template_inclusion = True,
+                        only_template_inclusion=True,
                         namespaces=[0],
                         total=limit)
     data = list()
