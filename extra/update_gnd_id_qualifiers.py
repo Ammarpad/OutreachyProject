@@ -28,10 +28,10 @@ def main(limit):
         for item in items:
             item.get()
             for claim in item.claims[GND_ID]:
-                for qual in claim.qualifiers.get(STATED_AS):
-                    if qual:
-                        done = updateQualifier(claim, qual)
-                        count += 1 if done else 0
+                if STATED_AS in claim.qualifiers:
+                    qual = claim.qualifiers[STATED_AS]
+                    updateQualifier(claim, qual)
+                    count += 1
 
                     if count == limit:
                         raise StopIteration
@@ -50,7 +50,7 @@ def updateQualifier(claim, qual):
     qualifier.setTarget(val)
     qualifier.hash = qual.hash
     claim.addQualifier(qualifier, summary=summary)
-    updated = qual.id != qualifier.id
+    target_changed = qual.target != qualifier.target
 
     if retrieved and updated:
         retrieved = pywikibot.Claim(REPO, RETRIEVED)
@@ -61,7 +61,7 @@ def updateQualifier(claim, qual):
         retrieved.setTarget(pywikibot.WbTime(**date))
         claim.addSource(retrieved)
 
-    return updated
+    return target_changed
 
 def getTargetVal(id):
     val = None
