@@ -15,19 +15,19 @@ def main(limit):
                         only_template_inclusion = True,
                         namespaces=[0],
                         total=limit)
-
     data = list()
     for page in pages:
         page_num = get_page_num(page)
         if page_num:
-            data.append((page, page_num))
+            data.append((page_num, page.data_item()))
 
-    for i in data:
-        print(i)
+    # Push to repo
+    result = import_script.add_claims_to_item(repo, data, PAGE_NUM_ID, summary='')
+    print("Finished. Imported %s pages, %s were skipped" %(result['added'], result['skipped']))
 
 def get_page_num(page):
     for t in page.raw_extracted_templates:
-        if t[0] == 'Infobox book':
+        if t[0] == BOOK_TEMPLATE:
             page_num = t[1].get('pages')
 
             if page_num is None:
