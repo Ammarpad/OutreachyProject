@@ -3,8 +3,11 @@
 import sys
 import requests
 import pywikibot
+
+from time import sleep
 from datetime import datetime
-from pywikibot import pagegenerators as pg 
+from pywikibot import pagegenerators as pg
+from requests.exceptions import ConnectionError, ReadTimeout
 
 GND_ID = 'P227'
 NAMED_AS = 'P1810'
@@ -24,13 +27,23 @@ def main(limit):
     '}'
     items = pg.WikidataSPARQLPageGenerator(query, site=REPO)
     count = 0
+    retries = 5
     try:
         for item in items:
             item.get()
             for claim in item.claims[GND_ID]:
                 if STATED_AS in claim.qualifiers:
                     for qual in claim.qualifiers[STATED_AS]:
-                        updateQualifier(claim, qual)
+                        try:
+                            updateQualifier(claim, qual)
+                        except (ConnectionError, ReadTimeout):
+                            retries -= 1
+                            if retries > 0:
+                                sleep(5)
+                                updateQualifier(claim, qual)
+                            else:
+                                print('Connection problem. Quitting')
+                                sys.exit()
                         count += 1
 
                     if count == limit:
