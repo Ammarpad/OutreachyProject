@@ -1,9 +1,9 @@
-#!//usr/local/bin/python3
+#!/usr/local/bin/python3
 
 import sys
 import requests
 import pywikibot
-from datetime import date
+from datetime import datetime
 from pywikibot import pagegenerators as pg 
 
 GND_ID = 'P227'
@@ -52,7 +52,8 @@ def updateQualifier(claim, qual):
 
     if retrieved:
         retrieved = pywikibot.Claim(REPO, RETRIEVED)
-        retrieved.setTarget(pywikibot.WbTime(date.today()) )
+        time = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+        retrieved.setTarget(pywikibot.WbTime.fromTimestr(time))
         claim.addSource(retrieved)
 
 def getTargetVal(id):
