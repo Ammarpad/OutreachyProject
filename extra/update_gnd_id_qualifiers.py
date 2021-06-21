@@ -83,13 +83,18 @@ def getTargetVal(id):
     if result.status_code == 200:
         res = result.json()
         if res['@type'] == 'person':
+            preferredName = res.get('preferredName', None)
+
+            if preferredName:
+                return preferredName
+
             pref = res.get('prefix', '')
             sname = res.get('surname', '')
             fname = res.get('forename', '')
             if not fname or (fname and sname == ''):
                 return fname if fname else None
 
-            val = '%s, %s' %(sname, fname)
+            val = '%s %s' %(sname, fname)
             val = ('%s %s' %(val, pref)) if pref else val
 
     return val
