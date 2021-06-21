@@ -25,6 +25,7 @@ def main(limit):
       '?item p:P227 ?statement.' \
       '?statement pq:P1932 ?stated.' \
     '}'
+
     items = pg.WikidataSPARQLPageGenerator(query, site=REPO)
     count = 0
     retries = 5
@@ -88,7 +89,7 @@ def getTargetVal(id):
             if not fname or (fname and sname == ''):
                 return fname if fname else None
 
-            val = '%s, %s' %(fname, sname)
+            val = '%s, %s' %(sname, fname)
             val = ('%s %s' %(val, pref)) if pref else val
 
     return val

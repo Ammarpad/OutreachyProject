@@ -40,7 +40,7 @@ def get_page_num(page):
                 if len(num) == 1:
                     return num[0]
                 else:
-                    # Multiple numbers, probably for different
+                    # Multiple values, probably for different
                     # editions, it's hard to programmatically
                     # extract these from free-form string
                     return None
