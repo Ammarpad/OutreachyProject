@@ -2,6 +2,7 @@
 
 import re
 import os
+import io
 import sys
 import pywikibot
 import base_import_script as import_script
@@ -13,15 +14,19 @@ def main(limit):
     site = pywikibot.Site('en', 'wikipedia')
     repo = site.data_repository()
     page = pywikibot.Page(site, BOOK_TEMPLATE, ns=10)
+
     pages = page.getReferences(follow_redirects=False,
                         only_template_inclusion=True,
                         namespaces=[0],
                         total=limit)
-    path = '/__local__/P1104_titles.txt'
+
     count = 0
     data = list()
+    path = '/__local__/P1104_titles.txt'
     file = open(os.path.dirname(__file__) + path, mode='a+')
+    file.seek(io.SEEK_SET) # move stream back to the first line for reading
     titles = file.readlines()
+    titles = [t.strip() for t in titles]
 
     for page in pages:
         title = page.title()
@@ -34,11 +39,10 @@ def main(limit):
         else:
             page_num = get_page_num(page)
             if page_num:
+                data.append((page_num, page.data_item()))
                 count += 1
                 if limit > count:
                     break
-                data.append((page_num, page.data_item()))
-
     file.close()
 
     # Push to repo
