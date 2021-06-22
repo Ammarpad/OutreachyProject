@@ -15,7 +15,8 @@ def do_import():
     en_wiki = pywikibot.Site('en', 'wikipedia')
     repo = en_wiki.data_repository()
     catObj = pywikibot.Category(en_wiki, cat)
-    data = no_data_item = list()
+    data = list()
+    no_data_item = list()
 
     pages = pagegenerators.CategorizedPageGenerator(catObj, recurse=False)
     for page in pages:
@@ -35,7 +36,7 @@ def do_import():
             print('Failed for %s' %page.title())
 
     if len(no_data_item):
-        import_script.record_pages_without_items(no_data, 'missing-data-items-list')
+        import_script.record_pages_without_items(no_data_item, 'missing-data-items-list')
 
     result = import_script.add_claims_to_item(repo, data, OFFICIAL_WEBSITE_ID, summary='')
 
