@@ -22,7 +22,7 @@ def do_import():
         try:
             data_item = pywikibot.ItemPage.fromPage(page)
         except:
-            print("Skipping {}, no data item found", page.title())
+            print("Skipping %s, no data item found" % page.title())
             no_data_item.append(page.title())
             continue
 
@@ -32,15 +32,14 @@ def do_import():
             data.append([website, data_item])
             print("Found %s for %s:" %(website, page.title()))
         else:
-            print("Cannot extract website for %s. Either there's none or there " +
-                "are multiple and it's unclear which one is official" % page.title())
+            print("Failed for %s" %page.title())
 
     if len(no_data_item):
         import_script.record_pages_without_items(no_data, 'missing-data-items-list')
 
     result = import_script.add_claims_to_item(repo, data, OFFICIAL_WEBSITE_PROPERTY, summary='')
 
-    print("Finished. Imported %s pages, %s were skipped" %(result['added'], result['skipped']))
+    print("Finished. Updated %s items, %s were skipped" %(result['added'], result['skipped']))
 
 def extract_weblink(page):
     page_source = page.expand_text(True)
