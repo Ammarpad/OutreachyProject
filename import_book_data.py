@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
 
 import re
+import os
 import sys
 import pywikibot
 import base_import_script as import_script
@@ -16,16 +17,29 @@ def main(limit):
                         only_template_inclusion=True,
                         namespaces=[0],
                         total=limit)
-    data = list()
+    path = '/__local__/P1104_titles.txt'
     count = 0
-    for page in pages:
-        page_num = get_page_num(page)
-        if page_num:
-            count += 1
-            if limit == count:
-                break
+    data = list()
+    file = open(os.path.dirname(__file__) + path, mode='a+')
+    titles = file.readlines()
 
-            data.append((page_num, page.data_item()))
+    for page in pages:
+        title = page.title()
+
+        if claim_exists(page):
+            file.write(title)
+            continue
+        elif title in titles:
+            continue
+        else:
+            page_num = get_page_num(page)
+            if page_num:
+                count += 1
+                if limit > count:
+                    break
+                data.append((page_num, page.data_item()))
+
+    file.close()
 
     # Push to repo
     result = import_script.add_claims_to_item(repo, data, PAGE_NUM_ID, summary='')
@@ -49,6 +63,15 @@ def get_page_num(page):
                     # editions, it's hard to programmatically
                     # extract these from free-form string
                     return None
+def claim_exists(page):
+    """Checks the repo to find if
+    the claim already exists"""
+
+    item = page.data_item()
+    data = item.get()
+
+    return PAGE_NUM_ID in data['claims']
+
 def sparql_query():
     """SPARQL query alternative"""
     return "SELECT ?item " \
