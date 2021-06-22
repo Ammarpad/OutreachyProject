@@ -39,7 +39,7 @@ def do_import():
 
     result = import_script.add_claims_to_item(repo, data, OFFICIAL_WEBSITE_ID, summary='')
 
-    print("Finished. Updated %s items, %s were skipped" %(result['added'], result['skipped']))
+    print('Finished. Updated %s items, %s were skipped' %(result['added'], result['skipped']))
 
 def extract_weblink(page):
     page_source = page.expand_text(True)

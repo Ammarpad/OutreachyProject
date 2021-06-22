@@ -22,7 +22,7 @@ def do_import():
         try:
             data_item = pywikibot.ItemPage.fromPage(page)
         except:
-            print("Skipping %s, no data item found" % page.title())
+            print('Skipping %s, no data item found' % page.title())
             no_data_item.append(page.title())
             continue
 
@@ -30,7 +30,7 @@ def do_import():
 
         if group_id:
             data.append([group_id, data_item])
-            print("Found %s for %s:" %(group_id, page.title()))
+            print('Found %s for %s:' %(group_id, page.title()))
         else:
             print('There\'s a problem with %s' % page.title())
 
@@ -39,7 +39,7 @@ def do_import():
 
     result = import_script.add_claims_to_item(repo, data, MusicBrainz, summary=summary)
 
-    print("Finished. Imported %s pages, %s were skipped" %(result['added'], result['skipped']))
+    print('Finished. Updated %s items, %s were skipped' %(result['added'], result['skipped']))
 
 def get_link(page):
     # Redirects
