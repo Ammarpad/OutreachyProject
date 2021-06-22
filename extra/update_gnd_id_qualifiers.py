@@ -1,10 +1,13 @@
 #!/usr/local/bin/python3
 
 import sys
+import json
 import requests
 import pywikibot
 
+
 from time import sleep
+from rdflib import Graph
 from datetime import datetime
 from pywikibot import pagegenerators as pg
 from requests.exceptions import ConnectionError, ReadTimeout
@@ -98,6 +101,25 @@ def getTargetVal(id):
             val = ('%s %s' %(val, pref)) if pref else val
 
     return val
+
+def getPreferredName(id):
+    url = f'https://d-nb.info/gnd/{id}/about/lds'
+    key = 'https://d-nb.info/standards/elementset/gnd#preferredNameForThePerson'
+    result = SESSION.get(url)
+
+    if result.status_code != 200:
+        return None
+
+    data = Graph().parse(data=result.text, format='n3')
+    sdata = data.serialize(format='json-ld', indent=4)
+
+    try:
+        j = json.loads(sdata.decode())
+        name = j[0][key][0].get('@value')
+        return name if name else None
+    except:
+        return None
+
 
 if __name__ == '__main__':
     limit = int(sys.argv[1])
