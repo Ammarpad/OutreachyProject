@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from pywikibot import pagegenerators
 import base_import_script as import_script
 
-OFFICIAL_WEBSITE_PROPERTY = 'P856'
+OFFICIAL_WEBSITE_ID = 'P856'
 URL_REGEX = r'https?://[^\s<>"]+|www\.[^\s<>"]+'
 
 def do_import():
@@ -30,14 +30,14 @@ def do_import():
 
         if website:
             data.append([website, data_item])
-            print("Found %s for %s:" %(website, page.title()))
+            print('Found %s for %s:' %(website, page.title()))
         else:
-            print("Failed for %s" %page.title())
+            print('Failed for %s' %page.title())
 
     if len(no_data_item):
         import_script.record_pages_without_items(no_data, 'missing-data-items-list')
 
-    result = import_script.add_claims_to_item(repo, data, OFFICIAL_WEBSITE_PROPERTY, summary='')
+    result = import_script.add_claims_to_item(repo, data, OFFICIAL_WEBSITE_ID, summary='')
 
     print("Finished. Updated %s items, %s were skipped" %(result['added'], result['skipped']))
 
