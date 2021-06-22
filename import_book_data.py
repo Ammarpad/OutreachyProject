@@ -1,11 +1,8 @@
 #!/usr/local/bin/python3
 
-import re
-import os
-import io
-import sys
 import pywikibot
-import base_import_script as import_script
+import re, os, io, sys
+import base_import_script
 
 PAGE_NUM_ID = 'P1104'
 BOOK_TEMPLATE = 'Infobox book'
@@ -46,7 +43,7 @@ def main(limit):
     file.close()
 
     # Push to repo
-    result = import_script.add_claims_to_item(repo, data, PAGE_NUM_ID, summary='')
+    result = base_import_script.add_claims_to_item(repo, data, PAGE_NUM_ID, summary='')
     print(f"Finished. Updated {result['added']} items, {result['skipped']} were skipped")
 
 def get_page_num(page):
