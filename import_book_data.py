@@ -17,14 +17,19 @@ def main(limit):
                         namespaces=[0],
                         total=limit)
     data = list()
+    count = 0
     for page in pages:
         page_num = get_page_num(page)
         if page_num:
+            count += 1
+            if limit == count:
+                break
+
             data.append((page_num, page.data_item()))
 
     # Push to repo
     result = import_script.add_claims_to_item(repo, data, PAGE_NUM_ID, summary='')
-    print("Finished. Imported %s pages, %s were skipped" %(result['added'], result['skipped']))
+    print(f"Finished. Updated {result['added']} items, {result['skipped']} were skipped")
 
 def get_page_num(page):
     for t in page.raw_extracted_templates:
@@ -44,7 +49,7 @@ def get_page_num(page):
                     # editions, it's hard to programmatically
                     # extract these from free-form string
                     return None
-def sparqlq():
+def sparql_query():
     """SPARQL query alternative"""
     return "SELECT ?item " \
     "WHERE " \
