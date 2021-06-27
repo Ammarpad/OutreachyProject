@@ -103,6 +103,8 @@ def getTargetVal(id):
     return val
 
 def getPreferredName(id):
+    """Alternative to getTargetVal(). This retrieves the
+    preferredNameForThePerson property if it exists"""
     url = f'https://d-nb.info/gnd/{id}/about/lds'
     key = 'https://d-nb.info/standards/elementset/gnd#preferredNameForThePerson'
     result = SESSION.get(url)
