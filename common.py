@@ -24,6 +24,8 @@ def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True
     @param prop_id: The property ID
     @param summary: Optional edit summary to use
     @param ref: Whether to add P143 as reference
+    @param check_value: Whether the data type of value should
+           be cheked and converted as necessarry.
     @return dictionary with the keys mentioned above
     """
     added = skipped = 0
@@ -103,7 +105,8 @@ def addSingleClaim(item, prop_id, value, summary, add_ref=False, check_value=Tru
     @param prop_id the propety id of the claim
     @param value The claim to add
     @param summary Edit summary
-    @param check_value
+     @param check_value: Whether the data type of value should
+           be cheked and converted as necessarry.
     @raises pywikibot.Error on unknown datatype
     """
     if check_value:

@@ -49,9 +49,8 @@ def main(limit):
                                 print('Connection problem. Quitting')
                                 sys.exit()
                         count += 1
-
-                    if count == limit:
-                        raise StopIteration
+                        if count == limit:
+                            raise StopIteration
     except StopIteration:
         print('Finished. %s items updated.' %count)
     
