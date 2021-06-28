@@ -171,3 +171,17 @@ def convertValue(prop_id, value):
         raise pywikibot.Error('Unknown datatype: %s' % datatype)
 
     return value
+
+def recordPages(titles, file_name):
+    """
+    Write list of titles to the file_name.
+    Does nothing if the titles list is empty
+
+    @param titles: List of titles to record
+    @param file_name: Name of file to write to
+    """
+    with open(file_name, mode='w', encoding='utf-8') as file:
+        for t in titles:
+            file.write(t)
+    print('%s pages however don\'t have wikidata item. ' \
+        'Their titles can be found in %s' % (len(titles), os.path.abspath(file_name)))
