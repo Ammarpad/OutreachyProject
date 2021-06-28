@@ -93,7 +93,7 @@ def add_qualifier(item_id, claim_id, prop_id, target):
     except:
        return 0
 
-def addSingleClaim(repo, item, prop_id, value, summary, add_ref=False, check_value=True):
+def addSingleClaim(item, prop_id, value, summary, add_ref=False, check_value=True):
     """
     This adds new claim to an Item and handles datatype conversion
     based on the property where we are to add the claim.
