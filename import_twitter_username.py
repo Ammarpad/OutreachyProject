@@ -3,22 +3,20 @@
 import re
 import requests
 
+import common
 import pywikibot
 from bs4 import BeautifulSoup
 from __local__ import credentials
 from pywikibot import pagegenerators
-import outreachyscript as main_script
-import base_import_script as import_script
 
 TWITTER_ID_PROP = 'P6552' 
 TWITTER_USERNAME_PROP = 'P2002'
 SESSION = requests.Session()
 
-def do_import():
+def doImport():
     cat = 'Twitter username not in Wikidata'
-    en_wiki = pywikibot.Site('en', 'wikipedia')
-    repo = en_wiki.data_repository()
-    catObj = pywikibot.Category(en_wiki, cat)
+    site = pywikibot.Site('en', 'wikipedia')
+    catObj = pywikibot.Category(site, cat)
     data = no_data_item = list()
    
     pages = pagegenerators.CategorizedPageGenerator(catObj, recurse=False)
@@ -30,7 +28,7 @@ def do_import():
             no_data_item.append(page.title())
             continue
 
-        username = extract_username(page)
+        username = extractUsername(page)
 
         if username:
             data.append([username, data_item])
@@ -40,20 +38,20 @@ def do_import():
                 + "are multiple and it's unclear which one is official" % page.title())
 
     if len(no_data_item):
-        import_script.record_pages_without_items(no_data, 'missing-data-items-list-twitter')
+        common.recordPages(no_data, 'missing-data-items-list-twitter')
 
-    result = import_script.add_claims_to_item(repo, data, TWITTER_USERNAME_PROP, summary='')
+    result = common.addMultipleClaims(data, TWITTER_USERNAME_PROP)
     
     for u, d in data:
         if d.title() in result['items']:
             num_id = get_numeric_id(u)
             if num_id:
-                main_script.add_qualifier(repo, d.title(), TWITTER_ID_PROP, TWITTER_USERNAME_PROP, num_id)
+                common.addQualifier(d.title(), TWITTER_ID_PROP, TWITTER_USERNAME_PROP, num_id)
 
-def extract_username(page):
+def extractUsername(page):
     pass
 
-def get_numeric_ids(usernames):
+def getNumericIds(usernames):
     params = headers = {}
 
     params['usernames'] = ','.join(usernames)
@@ -74,4 +72,4 @@ def get_numeric_ids(usernames):
        return False
 
 if __name__ == '__main__':
-    do_import()
+    doImport()
