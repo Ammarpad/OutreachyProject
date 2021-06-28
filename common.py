@@ -6,6 +6,9 @@ Set of common reusable functions
 
 import pywikibot
 
+site = pywikibot.Site('en', 'wikipedia')
+repo = site.data_repository()
+
 def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True):
     """
     Push claims to the data repository, add reference to each claim
@@ -24,13 +27,6 @@ def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True
     @return dictionary with the keys mentioned above
     """
     added = skipped = 0
-
-    if ref:
-        wiki = pywikibot.Site('en', 'wikipedia')
-        page = pywikibot.Page(wiki, 'English Wikipedia')
-        ref_item = page.data_item()
-        ref_id = 'P143' # imported from Wikimedia project
-    
     pages = list()
 
     for i, page in items:
@@ -38,17 +34,13 @@ def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True
         if not isinstance(page_item, pywikibot.ItemPage):
             page_item = page.data_item()
 
-        qid = page_item.title()
-
         try:
-            addClaim(repo, page_item, prop_id, i, summary, check_value)
-            if ref:
-                addReference(repo, qid, prop_id, ref_id, ref_item)
-
-            added += 1
+            addSingleClaim(page_item, prop_id, i, summary, check_value)
             pages.append(page)
+            added += 1
         except (pywikibot.Error, pywikibot.data.api.APIError) as e:
             skipped += 1
+            qid = page_item.title()
             print('Error: Adding claim to %s failed: %s' % (qid, str(e)))
 
     return {'added': added, 'skipped': skipped, 'pages': pages}
@@ -74,10 +66,34 @@ def addReference(item_id, claim_id, ref_type, value):
         reference.setTarget(value)
         claim.addSource(reference, summary='Adding reference.')
         return 1
-    except ValueError:
+    except:
        return 0
 
-def addClaim(repo, item, prop_id, value, summary, check_value=True):
+def add_qualifier(item_id, claim_id, prop_id, target):
+    """
+    This adds new qualifier to an existing claim
+    @param repo DataSite
+    @param item_id entity id where to do the work
+    @param prop_id the propety id of the claim to add qualifier on
+    @param claim_id the propety id of the claim (qualifier) to add
+    @param target value of the claim
+    """
+    item = pywikibot.ItemPage(repo, item_id)
+    claims = item.get()['claims']
+    claim = claims.get(claim_id)[0] or None
+
+    if not claim:
+        return 0
+
+    try:
+        qualifier = pywikibot.Claim(repo, prop_id)
+        qualifier.setTarget(target)
+        claim.addQualifier(qualifier, summary='Adding a qualifier.')
+        return 1
+    except:
+       return 0
+
+def addSingleClaim(repo, item, prop_id, value, summary, add_ref=False, check_value=True):
     """
     This adds new claim to an Item and handles datatype conversion
     based on the property where we are to add the claim.
@@ -100,10 +116,21 @@ def addClaim(repo, item, prop_id, value, summary, check_value=True):
         item = pywikibot.ItemPage(repo, item)
 
     item.addClaim(claim, summary=summary)
+
+    if add_ref:
+        page = pywikibot.Page(site, 'English Wikipedia')
+        ref_item = page.data_item()
+        addReference(item.title(), prop_id, 'P143', ref_item)
+
     print('New claim saved!')
     return 1
 
 def convertValue(prop_id, value):
+    """
+    Convert value to appropriate type to prepare for insertion
+    @param prop_id
+    @param value
+    """
     datatype = pywikibot.PropertyPage(repo, prop_id).type
     
     if datatype == 'wikibase-item':
