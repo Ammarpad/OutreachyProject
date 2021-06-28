@@ -186,5 +186,3 @@ def recordPages(titles, file_name):
     with open(file_name, mode='w', encoding='utf-8') as file:
         for t in titles:
             file.write(t)
-    print('%s pages however don\'t have wikidata item. ' \
-        'Their titles can be found in %s' % (len(titles), os.path.abspath(file_name)))
