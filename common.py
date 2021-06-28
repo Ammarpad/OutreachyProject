@@ -3,7 +3,6 @@
 """
 Set of common reusable functions
 """
-
 import pywikibot
 
 site = pywikibot.Site('en', 'wikipedia')
@@ -71,7 +70,7 @@ def addReference(item_id, claim_id, ref_type, value):
     except:
        return 0
 
-def add_qualifier(item_id, claim_id, prop_id, target):
+def addQualifier(item_id, claim_id, prop_id, target):
     """
     This adds new qualifier to an existing claim
     @param repo DataSite
@@ -164,9 +163,8 @@ def convertValue(prop_id, value):
     elif datatype == 'url':
         url = value
         if 'https://' not in value and 'http://' not in value:
-            # ensure scheme exists to avoid errors
             value = 'https://' + value
-        if not re.math(r'https?://[^\s<>"]+|www\.[^\s<>"]+', value):
+        if not pwikibot.re.match(r'https?://[^\s<>"]+|www\.[^\s<>"]+', value):
             raise pywikibot.Error('Invalid URL: %s' % url)
     elif datatype in ['math', 'external-id', 'musical-notation']:
         value = str(value)
@@ -183,6 +181,7 @@ def recordPages(titles, file_name):
     @param titles: List of titles to record
     @param file_name: Name of file to write to
     """
-    with open(file_name, mode='w', encoding='utf-8') as file:
-        for t in titles:
-            file.write(t)
+    if len(titles):
+        with open(file_name, mode='w', encoding='utf-8') as file:
+            for t in titles:
+                file.write(t)
