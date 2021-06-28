@@ -7,7 +7,6 @@ import pywikibot
 from bs4 import BeautifulSoup
 from pywikibot import pagegenerators
 
-
 OFFICIAL_WEBSITE_ID = 'P856'
 URL_REGEX = r'https?://[^\s<>"]+|www\.[^\s<>"]+'
 
@@ -40,9 +39,7 @@ def doImport(limit):
         if found == limit:
             break
 
-    if len(no_data_item):
-        common.recordPages(no_data_item, 'missing-data-items-list')
-
+    common.recordPages(no_data_item, 'missing-data-items-list')
     result = common.addMultipleClaims(data, OFFICIAL_WEBSITE_ID, check_value=False)
 
     print('Finished. Updated %s items, %s were skipped' %(result['added'], result['skipped']))
