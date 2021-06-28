@@ -6,10 +6,10 @@ Set of common reusable functions
 
 import pywikibot
 
-def push_claims_to_item(items, prop_id, summary='', ref=True, check_value=True):
+def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True):
     """
-    Push claims (in batch) to the data repository, add reference to each
-    claim if so requested, handle error and return a dictionary with the
+    Push claims to the data repository, add reference to each claim
+    if so requested, handle error and return a dictionary with the
     following keys:
 
     'added': The number of claims successfuly published
@@ -26,26 +26,24 @@ def push_claims_to_item(items, prop_id, summary='', ref=True, check_value=True):
     added = skipped = 0
 
     if ref:
-	    wiki = pywikibot.Site('en', 'wikipedia')
-	    page = pywikibot.Page(wiki, 'English Wikipedia')
-	    ref_item = page.data_item()
-	    ref_id = 'P143' # imported from Wikimedia project
+        wiki = pywikibot.Site('en', 'wikipedia')
+        page = pywikibot.Page(wiki, 'English Wikipedia')
+        ref_item = page.data_item()
+        ref_id = 'P143' # imported from Wikimedia project
     
     pages = list()
 
     for i, page in items:
-        if not isinstance(page, pywikibot.ItemPage):
+        page_item = page
+        if not isinstance(page_item, pywikibot.ItemPage):
             page_item = page.data_item()
-        else:
-            page_item = page
 
         qid = page_item.title()
 
         try:
-            # Add the claim
-            add_claim_to_item(repo, page_item, prop_id, i, summary, check_value)
+            addClaim(repo, page_item, prop_id, i, summary, check_value)
             if ref:
-    		    add_reference(repo, qid, prop_id, ref_id, ref_item)
+                addReference(repo, qid, prop_id, ref_id, ref_item)
 
             added += 1
             pages.append(page)
@@ -55,7 +53,7 @@ def push_claims_to_item(items, prop_id, summary='', ref=True, check_value=True):
 
     return {'added': added, 'skipped': skipped, 'pages': pages}
 
-def add_reference(item_id, claim_id, ref_type, value):
+def addReference(item_id, claim_id, ref_type, value):
     """
     This adds new qualifier to an existing claim
     @param item_id: entity id where to do the work
@@ -79,7 +77,7 @@ def add_reference(item_id, claim_id, ref_type, value):
     except ValueError:
        return 0
 
-def add_claim_to_item(repo, item, prop_id, value, summary, check_value=True):
+def addClaim(repo, item, prop_id, value, summary, check_value=True):
     """
     This adds new claim to an Item and handles datatype conversion
     based on the property where we are to add the claim.
@@ -93,7 +91,7 @@ def add_claim_to_item(repo, item, prop_id, value, summary, check_value=True):
     @raises pywikibot.Error on unknown datatype
     """
     if check_value:
-    	value = get_value_for_property(prop_id, value)
+        value = convertValue(prop_id, value)
 
     claim = pywikibot.Claim(repo, prop_id)
     claim.setTarget(value)
@@ -105,8 +103,8 @@ def add_claim_to_item(repo, item, prop_id, value, summary, check_value=True):
     print('New claim saved!')
     return 1
 
-def get_value_for_property(prop_id, value):
-	datatype = pywikibot.PropertyPage(repo, prop_id).type
+def convertValue(prop_id, value):
+    datatype = pywikibot.PropertyPage(repo, prop_id).type
     
     if datatype == 'wikibase-item':
         value = pywikibot.ItemPage(repo, value)
@@ -134,7 +132,7 @@ def get_value_for_property(prop_id, value):
     elif datatype == 'tabular-data':
         value = pywikibot.WbTabularData(value)
     elif datatype == 'url':
-    	url = value
+        url = value
         if 'https://' not in value and 'http://' not in value:
             # ensure scheme exists to avoid errors
             value = 'https://' + value
