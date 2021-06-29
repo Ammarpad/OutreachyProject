@@ -1,7 +1,5 @@
 #!/usr/local/bin/python3
 
-import re
-
 import common
 import pywikibot
 from pywikibot import pagegenerators
@@ -13,7 +11,8 @@ def doImport():
     cat = 'MusicBrainz release group not in Wikidata'
     site = pywikibot.Site('en', 'wikipedia')
     catObj = pywikibot.Category(site, cat)
-    data = no_data_item = list()
+    data = list()
+    no_data_item = list()
     summary = 'Adding release-group id'
 
     pages = pagegenerators.CategorizedPageGenerator(catObj, recurse=False)
@@ -22,7 +21,7 @@ def doImport():
             data_item = pywikibot.ItemPage.fromPage(page)
         except:
             print('Skipping %s, no data item found' % page.title())
-            no_data_item.append(page.title())
+            no_data.append(page.title())
             continue
 
         group_id = getLink(page)
@@ -33,7 +32,7 @@ def doImport():
         else:
             print("There's a problem with %s" % page.title())
 
-    common.recordPages(no_data, 'missing-data-items-list-mb')
+    common.recordPages(no_data_item, 'missing-data-items-list-mb')
 
     result = common.addMultipleClaims(repo, data, MusicBrainz, summary=summary)
 
@@ -51,7 +50,7 @@ def getLink(page):
     link = None
     for t in templates:
         if func(t[0].title()):
-            link = re.findall(REGEX, t[1][0])
+            link = pywikibot.re.findall(REGEX, t[1][0])
             break
 
     return link[0] if link else link
