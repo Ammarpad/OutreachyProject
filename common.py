@@ -149,7 +149,7 @@ def convertValue(prop_id, value):
         if form == 3:
             style = '%d %B %Y'
         elif form == 2:
-            style = '%B %Y'b
+            style = '%B %Y'
         else:
             style = '%Y'
         dt = datetime.strptime(value, style).isoformat()

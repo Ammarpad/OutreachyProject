@@ -14,6 +14,7 @@ def doImport(limit):
     cat = 'Official_website_not_in_Wikidata'
     site = pywikibot.Site('en', 'wikipedia')
     cat = pywikibot.Category(site, cat)
+    repo = site.data_repository()
     data = list()
     no_data_item = list()
 
@@ -30,6 +31,8 @@ def doImport(limit):
         website = extractWeblink(page)
 
         if website:
+            if isInUse(website, repo):
+                continue
             data.append([website, data_item])
             found += 1
             print('Found %s for %s:' %(website, page.title()))
@@ -43,6 +46,14 @@ def doImport(limit):
     result = common.addMultipleClaims(data, OFFICIAL_WEBSITE_ID, check_value=False)
 
     print('Finished. Updated %s items, %s were skipped' %(result['added'], result['skipped']))
+
+def isInUse(link, site):
+    query = 'SELECT ?item WHERE '\
+        '{ ?item wdt:' +str(OFFICIAL_WEBSITE_ID)+ ' ?id' \
+        ' FILTER ($id = <' + str(link) + '>) . } LIMIT 1'
+    res = pagegenerators.WikidataSPARQLPageGenerator(query, site=site)
+
+    return next(res, None) is not None
 
 def extractWeblink(page):
     page_source = page.expand_text(True)
