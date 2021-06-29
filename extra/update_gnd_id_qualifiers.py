@@ -1,14 +1,7 @@
 #!/usr/local/bin/python3
 
 import sys
-import json
-import requests
 import pywikibot
-
-
-from time import sleep
-from rdflib import Graph
-from datetime import datetime
 from pywikibot import pagegenerators as pg
 from requests.exceptions import ConnectionError, ReadTimeout
 
@@ -18,7 +11,7 @@ STATED_AS = 'P1932'
 RETRIEVED = 'P813'
 SITE = pywikibot.Site('wikidata', 'wikidata')
 REPO = SITE.data_repository()
-summary = '([[Wikidata:Requests for permissions/Bot/AmmarpadBot|update GND ID qualifier]])'
+summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot|update GND ID qualifier]])'
 
 def main(limit):
     query = 'SELECT ?item ?stated WHERE {' \
@@ -41,7 +34,7 @@ def main(limit):
                         except (ConnectionError, ReadTimeout):
                             retries -= 1
                             if retries > 0:
-                                sleep(5)
+                                pywikibot.sleep(5)
                                 updateQualifier(claim, qual)
                             else:
                                 print('Connection problem. Quitting')
