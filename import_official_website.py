@@ -35,22 +35,22 @@ def doImport(limit):
                 continue
             data.append([website, data_item])
             found += 1
-            print('Found %s for %s:' %(website, page.title()))
+            print('Found %s for %s (%s):' %(website, page.title(), data_item.title()))
         else:
             print('Failed for %s' %page.title())
 
         if found == limit:
             break
 
-    common.recordPages(no_data_item, 'missing-data-items-list')
-    result = common.addMultipleClaims(data, OFFICIAL_WEBSITE_ID, check_value=False)
+    # common.recordPages(no_data_item, 'missing-data-items-list')
+    # result = common.addMultipleClaims(data, OFFICIAL_WEBSITE_ID, check_value=False)
 
-    print('Finished. Updated %s items, %s were skipped' %(result['added'], result['skipped']))
+    # print('Finished. Updated %s items, %s were skipped' %(result['added'], result['skipped']))
 
 def isInUse(link, site):
     query = 'SELECT ?item WHERE '\
         '{ ?item wdt:' +str(OFFICIAL_WEBSITE_ID)+ ' ?id' \
-        ' FILTER ($id = <' + str(link) + '>) . } LIMIT 1'
+        ' FILTER ($id = <' + link + '>) . } LIMIT 1'
     res = pagegenerators.WikidataSPARQLPageGenerator(query, site=site)
 
     return next(res, None) is not None
@@ -63,7 +63,7 @@ def extractWeblink(page):
     if not items or len(items) != 1:
         return None
 
-    return re.findall(URL_REGEX, str(items))[0]
+    return re.findall(URL_REGEX, str(items))[0].rstrip('/')
 
 if __name__ == '__main__':
     limit = int(sys.argv[1])
