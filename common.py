@@ -99,7 +99,6 @@ def addSingleClaim(item, prop_id, value, summary, add_ref=False, check_value=Tru
     This adds new claim to an Item and handles datatype conversion
     based on the property where we are to add the claim.
 
-    @param repo DataSite
     @param item entity id where to do the work or pywikibot.ItemPage object
     @param prop_id the propety id of the claim
     @param value The claim to add
