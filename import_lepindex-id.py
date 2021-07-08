@@ -28,9 +28,9 @@ def main():
                 for key, value in t[1].items():
                     if key.lower() == 'id':
                         lepId = str(value)
-
-        common.addSingleClaim(data_item, LEPINDEX_ID, lepId, check_value=False, add_ref=True)
-        count += 1
+        if lepId:
+            common.addSingleClaim(data_item, LEPINDEX_ID, lepId, check_value=False, add_ref=True)
+            count += 1
 
     print('Finished. Updated %s items' %count)
 
