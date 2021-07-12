@@ -7,7 +7,7 @@ from pywikibot import pagegenerators
 MusicBrainz = 'P436'
 REGEX = r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 
-def doImport():
+def doImport(limit):
     cat = 'MusicBrainz release group not in Wikidata'
     site = pywikibot.Site('en', 'wikipedia')
     catObj = pywikibot.Category(site, cat)
@@ -16,6 +16,7 @@ def doImport():
     summary = 'Adding release-group id'
 
     pages = pagegenerators.CategorizedPageGenerator(catObj, recurse=False)
+    found = 0
     for page in pages:
         try:
             data_item = pywikibot.ItemPage.fromPage(page)
@@ -29,8 +30,12 @@ def doImport():
         if group_id:
             data.append([group_id, data_item])
             print('Found %s for %s:' %(group_id, page.title()))
+            found += 1
         else:
             print("There's a problem with %s" % page.title())
+
+        if found == limit:
+            break
 
     common.recordPages(no_data_item, 'missing-data-items-list-mb')
 
@@ -56,4 +61,5 @@ def getLink(page):
     return link[0] if link else link
 
 if __name__ == '__main__':
-    doImport()
+    limit = int(sys.argv[1])
+    doImport(limit)
