@@ -24,7 +24,7 @@ def doImport():
         try:
             data_item = pywikibot.ItemPage.fromPage(page)
         except:
-            print("Skipping {}, no data item found", page.title())
+            print("Skipping %s, no data item found" % page.title())
             no_data_item.append(page.title())
             continue
 
@@ -37,9 +37,7 @@ def doImport():
             print("Cannot extract Twitter username for %s. Either there's none or there "
                 + "are multiple and it's unclear which one is official" % page.title())
 
-    if len(no_data_item):
-        common.recordPages(no_data, 'missing-data-items-list-twitter')
-
+    common.recordPages(no_data, 'missing-data-items-list-twitter')
     result = common.addMultipleClaims(data, TWITTER_USERNAME_PROP)
     
     for u, d in data:
@@ -47,6 +45,8 @@ def doImport():
             num_id = get_numeric_id(u)
             if num_id:
                 common.addQualifier(d.title(), TWITTER_ID_PROP, TWITTER_USERNAME_PROP, num_id)
+
+    print('Finished. Updated %s items, %s were skipped' %(result['added'], result['skipped']))
 
 def extractUsername(page):
     pass
