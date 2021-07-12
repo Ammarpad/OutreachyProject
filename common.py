@@ -36,7 +36,7 @@ def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True
             page_item = page.data_item()
 
         try:
-            addSingleClaim(page_item, prop_id, i, summary, check_value)
+            addSingleClaim(page_item, prop_id, i, summary, add_ref, check_value)
             pages.append(page)
             added += 1
         except (pywikibot.Error, pywikibot.data.api.APIError) as e:

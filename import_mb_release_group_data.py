@@ -39,7 +39,7 @@ def doImport(limit):
 
     common.recordPages(no_data_item, 'missing-data-items-list-mb')
 
-    result = common.addMultipleClaims(repo, data, MusicBrainz, summary=summary)
+    result = common.addMultipleClaims(repo, data, MusicBrainz, check_value=False, summary=summary)
 
     print('Finished. Updated %s items, %s were skipped' %(result['added'], result['skipped']))
 
