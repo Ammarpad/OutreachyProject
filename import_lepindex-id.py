@@ -27,7 +27,8 @@ def main():
             if t[0].lower() == 'lepindex':
                 for key, value in t[1].items():
                     if key.lower() == 'id':
-                        lepId = str(value)
+                        if value.isdecimal():
+                            lepId = value
         if lepId:
             common.addSingleClaim(data_item, LEPINDEX_ID, lepId, check_value=False, add_ref=True)
             count += 1
