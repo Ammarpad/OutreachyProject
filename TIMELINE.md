@@ -1,11 +1,11 @@
 #### Outreachy Internship (May-August 2021)
 
+*Original May 2021. Revised July 12, 2021*
+
 - Project title: Synchronising Wikidata and Wikipedias using pywikibot
 - Project description: [Project details on phabricator](https://phabricator.wikimedia.org/T276329)
 - Organization: [Wikimedia Foundation](https://wikimediafoundation.org/)
 - Mentor: [Mike Peel](http://www.mikepeel.net/)
-
-
 
 #### May 24 to June 5:
 - Familiarize myself more with the Pywikibot package and its API as well as the existing scripts at [mikepeel/wikicode](https://bitbucket.org/mikepeel/wikicode/ ). Do extensive exploration of the code to have a deeper understanding of it before starting the coding.
@@ -14,20 +14,16 @@
 - Fine tune details with mentor.
 
 #### June 6 to July 4:
-- Implement python modules to execute the tasks (1)
+- Implement python modules to execute the tasks (5 modules)
 - Build upon and integrate with the modules written in the Micro Tasks phase.
 - Create a bot account on Wikidata and submit it for approval process [Wikidata:Bots#Approval_process](https://www.wikidata.org/wiki/Wikidata:Bots#Approval_process)
 for a number of tasks to be decided.
 - Do mass or chunked continuous run of the bot (time and format to be decided in the concrete outlining week)
 
-#### July 5 to July 19:
-- Implement python modules to execute the second batch of tasks (2)
-- Plan and request for bot task approval for the newly coded tasks
-- Do mass or chunked continuous run of the bot (time and format to be decided in the concrete outlining week)
-- Write mid-point project progress blog post
 
-#### July 20 to August 1:
-- Implement python modules to execute the final batch of tasks (3)
+#### July 5 to August 1:
+- Write mid-point project progress blog post
+- Implement python modules to execute the final batch of tasks (10 mdoules)
 - Plan and request for bot task approval for the newly coded tasks
 - Do mass or chunked continuous run of the bot (time and format to be decided in the concrete outlining week)
 - Map outstanding issues in the [mikepeel/wikicode](https://bitbucket.org/mikepeel/wikicode/ ) scripts that needs addressing and outline manageable subtasks
