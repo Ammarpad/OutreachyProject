@@ -17,30 +17,7 @@ def main(limit):
                         namespaces=[0],
                         total=limit)
 
-    count = 0
-    data = list()
-    path = '/__local__/P1104_titles.txt'
-    file = open(os.path.dirname(__file__) + path, mode='a+')
-    file.seek(io.SEEK_SET) # move stream back to the first line for reading
-    titles = file.readlines()
-    titles = [t.strip() for t in titles]
-
-    for page in pages:
-        title = page.title()
-
-        if claim_exists(page):
-            file.write(title)
-            continue
-        elif title in titles:
-            continue
-        else:
-            page_num = get_page_num(page)
-            if page_num:
-                data.append((page_num, page.data_item()))
-                count += 1
-                if limit > count:
-                    break
-    file.close()
+    data = getData(pages, limit)
 
     # Push to repo
     result = common.addMultipleClaims(data, PAGE_NUM_ID, summary='')
@@ -72,6 +49,32 @@ def claim_exists(page):
     data = item.get()
 
     return PAGE_NUM_ID in data['claims']
+
+def getData(pages, limit):
+    data = list()
+    path = os.path.dirname(__file__) + '/__local__/P1104_titles.txt'
+
+    with open(path, mode='a+') as file:
+        file.seek(io.SEEK_SET)
+        titles = file.readlines()
+        titles = [t.strip() for t in titles]
+
+        for page in pages:
+            title = page.title()
+
+            if claim_exists(page):
+                file.write(title)
+                continue
+            elif title in titles:
+                continue
+            else:
+                page_num = get_page_num(page)
+                if page_num:
+                    data.append((page_num, page.data_item()))
+                    count += 1
+                    if limit > count:
+                        break
+    return data
 
 def sparql_query():
     """SPARQL query alternative"""
