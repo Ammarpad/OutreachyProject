@@ -53,27 +53,30 @@ def claimExists(page):
 def getData(pages, limit):
     data = list()
     path = os.path.dirname(__file__) + '/__local__/P1104_titles.txt'
+    count = 0
 
     with open(path, mode='a+') as file:
         file.seek(io.SEEK_SET)
-        titles = file.readlines()
-        titles = [t.strip() for t in titles]
+        lines = file.readlines()
+        titles = [t.strip() for t in lines]
 
         for page in pages:
             title = page.title()
 
-            if claimExists(page):
-                file.write(title)
+            if title in titles:
                 continue
-            elif title in titles:
+            elif claimExists(page):
+                file.write(title+'\n')
                 continue
             else:
                 page_num = getPageNum(page)
+                file.write(title+'\n')
                 if page_num:
                     data.append([page_num, page.data_item()])
                     count += 1
-                    if limit > count:
-                        break
+
+            if limit == count:
+                break
     return data
 
 def sparql_query():
