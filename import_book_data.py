@@ -43,11 +43,12 @@ def getPageNum(page):
 def claimExists(page):
     """Checks the repo to find if
     the claim already exists"""
+    try:
+        item = page.data_item()
+    except pywikibot.exceptions.NoPage:
+        return False
 
-    item = page.data_item()
-    data = item.get()
-
-    return PAGE_NUM_ID in data['claims']
+    return PAGE_NUM_ID in item.get()['claims']
 
 def getData(pages, limit):
     data = list()
