@@ -22,7 +22,7 @@ def main(limit):
     result = common.addMultipleClaims(data, PAGE_NUM_ID, summary='')
     print(f"Finished. Updated {result['added']} items, {result['skipped']} were skipped")
 
-def get_page_num(page):
+def getPageNum(page):
     for t in page.raw_extracted_templates:
         if t[0] == BOOK_TEMPLATE:
             page_num = t[1].get('pages')
@@ -40,7 +40,7 @@ def get_page_num(page):
                     # editions, it's hard to programmatically
                     # extract these from free-form string
                     return None
-def claim_exists(page):
+def claimExists(page):
     """Checks the repo to find if
     the claim already exists"""
 
@@ -61,13 +61,13 @@ def getData(pages, limit):
         for page in pages:
             title = page.title()
 
-            if claim_exists(page):
+            if claimExists(page):
                 file.write(title)
                 continue
             elif title in titles:
                 continue
             else:
-                page_num = get_page_num(page)
+                page_num = getPageNum(page)
                 if page_num:
                     data.append([page_num, page.data_item()])
                     count += 1
