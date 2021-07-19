@@ -1,8 +1,7 @@
 #!/usr/local/bin/python3
 
-import pywikibot
 import re, os, io, sys
-import common
+import common, pywikibot
 
 PAGE_NUM_ID = 'P1104'
 BOOK_TEMPLATE = 'Infobox book'
@@ -70,7 +69,7 @@ def getData(pages, limit):
             else:
                 page_num = get_page_num(page)
                 if page_num:
-                    data.append((page_num, page.data_item()))
+                    data.append([page_num, page.data_item()])
                     count += 1
                     if limit > count:
                         break
