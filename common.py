@@ -4,6 +4,8 @@
 Set of common reusable functions
 """
 import pywikibot
+from datetime import datetime
+from pywikibot.data.api import APIError
 
 site = pywikibot.Site('en', 'wikipedia')
 repo = site.data_repository()
@@ -39,7 +41,7 @@ def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True
             addSingleClaim(page_item, prop_id, i, summary, add_ref, check_value)
             pages.append(page)
             added += 1
-        except (pywikibot.Error, pywikibot.data.api.APIError) as e:
+        except (pywikibot.Error, api.APIError) as e:
             skipped += 1
             qid = page_item.title()
             print('Error: Adding claim to %s failed: %s' % (qid, str(e)))
