@@ -23,7 +23,7 @@ for a number of tasks to be decided.
 
 #### July 5 to August 1:
 - Write mid-point project progress blog post
-- Implement python modules to execute the final batch of tasks (10 mdoules)
+- Implement python modules to execute the final batch of tasks (10 modules)
 - Plan and request for bot task approval for the newly coded tasks
 - Do mass or chunked continuous run of the bot (time and format to be decided in the concrete outlining week)
 - Map outstanding issues in the [mikepeel/wikicode](https://bitbucket.org/mikepeel/wikicode/ ) scripts that needs addressing and outline manageable subtasks
