@@ -18,7 +18,7 @@ def main(limit):
                         namespaces=[0],
                         total=limit)
 
-    data = getData(page, limit)
+    data = getData(pages, limit)
 
     # Push to repo
     result = common.addMultipleClaims(data, PAGE_NUM_ID, check_value=False, summary='')
