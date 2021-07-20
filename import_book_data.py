@@ -3,6 +3,8 @@
 import re, os, io, sys
 import common, pywikibot
 
+ISBN_13 = 'P212'
+ISBN_10 = 'P957'
 PAGE_NUM_ID = 'P1104'
 BOOK_TEMPLATE = 'Infobox book'
 
@@ -16,14 +18,14 @@ def main(limit):
                         namespaces=[0],
                         total=limit)
 
-    data = getData(pages, limit)
+    data = getData(page, limit)
 
     # Push to repo
-    result = common.addMultipleClaims(data, PAGE_NUM_ID, summary='')
+    result = common.addMultipleClaims(data, PAGE_NUM_ID, check_value=False, summary='')
     print(f"Finished. Updated {result['added']} items, {result['skipped']} were skipped")
 
-def getPageNum(page):
-    for t in page.raw_extracted_templates:
+def getPageNum(templates):
+    for t in templates
         if t[0] == BOOK_TEMPLATE:
             page_num = t[1].get('pages')
 
@@ -40,15 +42,45 @@ def getPageNum(page):
                     # editions, it's hard to programmatically
                     # extract these from free-form string
                     return None
-def claimExists(page):
+
+def getISBN(templates):
+    for t in templates:
+        if t[0] == BOOK_TEMPLATE:
+            page_num = t[1].get('isbn')
+
+            if page_num is None:
+                return None
+            elif page_num.isdigit():
+                return page_num
+            else:
+                num = re.findall(r'\d+', page_num)
+                if len(num) == 1:
+                    return num[0]
+
+def getOCLC(templates):
+    for t in templates:
+        if t[0] == BOOK_TEMPLATE:
+            page_num = t[1].get('oclc')
+
+            if page_num is None:
+                return None
+            elif page_num.isdigit():
+                return page_num
+            else:
+                num = re.findall(r'\d+', page_num)
+                if len(num) == 1:
+                    return num[0]
+
+def claimExists(claimID, page):
     """Checks the repo to find if
     the claim already exists"""
     try:
         item = page.data_item()
     except pywikibot.exceptions.NoPage:
-        return False
+        # Pretend it does if don't even have data item
+        return True
 
-    return PAGE_NUM_ID in item.get()['claims']
+    return claimID in item.get()['claims']
 
 def getData(pages, limit):
     data = list()
@@ -65,11 +97,12 @@ def getData(pages, limit):
 
             if title in titles:
                 continue
-            elif claimExists(page):
+            elif claimExists(PAGE_NUM_ID, page):
                 file.write(title+'\n')
                 continue
             else:
-                page_num = getPageNum(page)
+                temps = page.raw_extracted_templates
+                page_num = getPageNum(temps)
                 file.write(title+'\n')
                 if page_num:
                     data.append([page_num, page.data_item()])
