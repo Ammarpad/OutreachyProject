@@ -118,6 +118,7 @@ def getData(pages, limit):
                     # Special handling for ISBN(13|10)
                     # We hold the prop value from point of extraction
                     if prop in ISBN_PROPS.keys()
+                        res = res[0]
                         prop = res[1]
 
                     current = data.get(prop)
