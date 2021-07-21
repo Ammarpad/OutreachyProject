@@ -5,11 +5,11 @@ import common, pywikibot
 
 ISBN_13 = 'P212'
 ISBN_10 = 'P957'
-OCLC_1D = 'P243'
+OCLC_ID = 'P243'
 PAGE_NUM_ID = 'P1104'
 BOOK_TEMPLATE = 'Infobox book'
 ISBN_PROPS = { 10: ISBN_10, 13: ISBN_13 }
-ALL_PROPS = (PAGE_NUM_ID, OCLC_1D, ISBN_13, ISBN_10)
+ALL_PROPS = (PAGE_NUM_ID, OCLC_ID, ISBN_13, ISBN_10)
 # For basic validation of structure for both ISBN- 10 and 13
 RE_ISBN = re.compile(r'^(97(8|9))?\d{9}(\d|X)$', re.I)
 
@@ -36,17 +36,19 @@ def main(limit):
 def getPageNum(templates):
     page_num = getValueRaw(templates, 'pages')
 
-    if page_num and page_num.isdigit():
+    if not page_num:
+        return None
+
+    if page_num.isdigit():
         return page_num
 
     num = re.findall(r'\d+', page_num)
-    if len(num) == 1:
-        return num[0]
-    else:
-        # Multiple values, probably for different
-        # editions, it's hard to programmatically
-        # extract these from free-form string
-        return None
+
+    # Sometimes there'd be multiple values, probably
+    # for different editions, it's hard to programmatically
+    # extract these from free-form string.
+    # So we will use it here only if there's a single value
+    return num[0] if len(num) == 1 else None
 
 def getISBN(templates):
     isbn = getValueRaw(templates, 'isbn')
@@ -80,9 +82,9 @@ def checkClaims(claimIDs, page):
     of these claims already exist on the item"""
     try:
         item = page.data_item()
-    except pywikibot.exceptions.NoPage:
+    except pywikibot.exceptions.NoPageError:
         # Pretend it does if we don't even have data item
-        return []
+        item = []
 
     res = list()
     for claimID in claimIDs:
@@ -122,16 +124,16 @@ def getData(pages, limit):
         for page in pages:
             title = page.title()
 
-            if title in titles:
+            if title not in titles:
                 continue
 
             ids, item = checkClaims(ALL_PROPS, page)
-            if ids == [] or ids[0] == []:
+            if ids == [] or item == []:
                 continue
 
             temps = page.raw_extracted_templates
-            for prop in ids[0]:
-                res = extractValue(temps, temps)
+            for prop in ids:
+                res = extractValue(prop, temps)
                 if res:
                     # Special handling for ISBN(13|10)
                     # We hold the prop value from point of extraction
@@ -139,8 +141,7 @@ def getData(pages, limit):
                         res = res[0]
                         prop = res[1]
 
-                    current = data.get(prop)
-                    data.update({prop: current.append(res, item)})
+                    data[prop].append([res, item])
                     count += 1
 
             if limit == count:
@@ -148,12 +149,12 @@ def getData(pages, limit):
 
     return data
 
-def extractValue(p_id, temps):
-    if p_id == PAGE_NUM_ID:
+def extractValue(prop, temps):
+    if prop == PAGE_NUM_ID:
         return getPageNum(temps)
-    elif p_id == OCLC_ID:
+    elif prop == OCLC_ID:
         return getOCLC(temps)
-    elif p_id in ISBN_PROPS.keys():
+    elif prop in ISBN_PROPS.keys():
         return getISBN(temps)
 
     return False
