@@ -55,7 +55,7 @@ def getISBN(templates):
         raw = isbn.replace('-', '')
         ntype = ISBN_PROPS.get(len(raw), False)
 
-        if ntype and RE_ISBN.match(raw)
+        if ntype and RE_ISBN.match(raw):
             return isbn, ntype
 
     return None
@@ -125,7 +125,7 @@ def getData(pages, limit):
             if title in titles:
                 continue
 
-            ids, item = checkClaims(ALL_PROPS, page):
+            ids, item = checkClaims(ALL_PROPS, page)
             if ids == [] or ids[0] == []:
                 continue
 
@@ -135,7 +135,7 @@ def getData(pages, limit):
                 if res:
                     # Special handling for ISBN(13|10)
                     # We hold the prop value from point of extraction
-                    if prop in ISBN_PROPS.keys()
+                    if prop in ISBN_PROPS.keys():
                         res = res[0]
                         prop = res[1]
 
@@ -153,7 +153,7 @@ def extractValue(p_id, temps):
         return getPageNum(temps)
     elif p_id == OCLC_ID:
         return getOCLC(temps)
-    elif p_id in ISBN_PROPS.keys()
+    elif p_id in ISBN_PROPS.keys():
         return getISBN(temps)
 
     return False
