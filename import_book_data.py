@@ -5,6 +5,7 @@ import common, pywikibot
 
 ISBN_13 = 'P212'
 ISBN_10 = 'P957'
+OCLC_1D = 'P243'
 PAGE_NUM_ID = 'P1104'
 BOOK_TEMPLATE = 'Infobox book'
 ISBN_ID = { 10: ISBN_10, 13: ISBN_13 }
@@ -60,16 +61,12 @@ def getISBN(templates):
 def getOCLC(templates):
     for t in templates:
         if t[0] == BOOK_TEMPLATE:
-            page_num = t[1].get('oclc')
+            ocnum = t[1].get('oclc')
+            if ocnum:
+                ocnum = ocnum.strip()
+                return ocnum if re.match(r'^\d{1,14}$', ocnum) else None
 
-            if page_num is None:
-                return None
-            elif page_num.isdigit():
-                return page_num
-            else:
-                num = re.findall(r'\d+', page_num)
-                if len(num) == 1:
-                    return num[0]
+    return None
 
 def claimExists(claimID, page):
     """Checks the repo to find if
