@@ -34,44 +34,43 @@ def main(limit):
             print(f"Finished for {prop}. Updated {result['added']} items, {result['skipped']} were skipped")
 
 def getPageNum(templates):
-    for t in templates:
-        if t[0] == BOOK_TEMPLATE:
-            page_num = t[1].get('pages')
+    page_num = getValueRaw(templates, 'pages')
 
-            if page_num is None:
-                return None
-            elif page_num.isdigit():
-                return page_num
-            else:
-                num = re.findall(r'\d+', page_num)
-                if len(num) == 1:
-                    return num[0]
-                else:
-                    # Multiple values, probably for different
-                    # editions, it's hard to programmatically
-                    # extract these from free-form string
-                    return None
+    if page_num and page_num.isdigit():
+        return page_num
+
+    num = re.findall(r'\d+', page_num)
+    if len(num) == 1:
+        return num[0]
+    else:
+        # Multiple values, probably for different
+        # editions, it's hard to programmatically
+        # extract these from free-form string
+        return None
 
 def getISBN(templates):
-    for t in templates:
-        if t[0] == BOOK_TEMPLATE:
-            isbn = t[1].get('isbn')
-            if isbn:
-                isbn = isbn.strip()
-                raw = isbn.replace('-', '')
-                return isbn, ISBN_ID.get(len(raw), 0) if RE_ISBN.match(raw) else None
+    isbn = getValueRaw(templates, 'isbn')
+    if isbn:
+        isbn = isbn.strip()
+        raw = isbn.replace('-', '')
+        return isbn, ISBN_ID.get(len(raw), 0) if RE_ISBN.match(raw) else None
 
     return None
 
 def getOCLC(templates):
-    for t in templates:
-        if t[0] == BOOK_TEMPLATE:
-            ocnum = t[1].get('oclc')
-            if ocnum:
-                ocnum = ocnum.strip()
-                return ocnum if re.match(r'^\d{1,14}$', ocnum) else None
+    ocnum = getValueRaw(templates, 'oclc')
+    if ocnum:
+        ocnum = ocnum.strip()
+        return ocnum if re.match(r'^\d{1,14}$', ocnum) else None
 
     return None
+
+def getValueRaw(templates, name):
+    for t in templates:
+        if t[0] == BOOK_TEMPLATE:
+            return t[1].get(name)
+
+    return False
 
 def checkClaims(claimIDs, page):
     """Checks the repo to find if any of or all
