@@ -7,9 +7,8 @@ ISBN_13 = 'P212'
 ISBN_10 = 'P957'
 PAGE_NUM_ID = 'P1104'
 BOOK_TEMPLATE = 'Infobox book'
-
-isbn13 = re.compile(r'^97(8|9)(-\d+){4}$')
-isbn10 = re.compile(r'')
+# For basic validation of structure for both ISBN- 10 and 13
+RE_ISBN = re.compile(r'^(97(8|9))?\d{9}(\d|X)$', re.I)
 
 def main(limit):
     site = pywikibot.Site('en', 'wikipedia')
@@ -28,7 +27,7 @@ def main(limit):
     print(f"Finished. Updated {result['added']} items, {result['skipped']} were skipped")
 
 def getPageNum(templates):
-    for t in templates
+    for t in templates:
         if t[0] == BOOK_TEMPLATE:
             page_num = t[1].get('pages')
 
@@ -50,13 +49,9 @@ def getISBN(templates):
     for t in templates:
         if t[0] == BOOK_TEMPLATE:
             isbn = t[1].get('isbn')
-
-            if isbn is None:
-                return None
-            res = isbn13.match(isbn):
-            if res:
-                return res.group(0)
-            return None
+            if isbn:
+                isbn = isbn.strip()
+                return isbn if RE_ISBN.match(isbn.replace('-', '')) else None
 
 def getOCLC(templates):
     for t in templates:
