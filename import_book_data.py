@@ -23,12 +23,14 @@ def main(limit):
                         namespaces=[0],
                         total=limit)
 
+    # This does a lot of things...
     allData = getData(pages, limit)
 
     # Push all to the repo
     for prop in ALL_PROPS:
         data = allData[prop]
-        result = common.addMultipleClaims(data, prop, check_value=False, summary='')
+        if data != []:
+            result = common.addMultipleClaims(data, prop, check_value=False, summary='')
 
     print(f"Finished. Updated {result['added']} items, {result['skipped']} were skipped")
 
@@ -89,7 +91,7 @@ def checkClaims(claimIDs, page):
     return res, item
 
 def getData(pages, limit):
-    data = list()
+    data = dict.fromkeys(ALL_PROPS, [])
     path = os.path.dirname(__file__) + '/__local__/P1104_titles.txt'
     count = 0
 
@@ -109,16 +111,15 @@ def getData(pages, limit):
                 continue
 
             temps = page.raw_extracted_templates
-            for i in ids[0]:
-                res = extractValue(temps, temps)
-
+            for prop in ids[0]:
+                val = extractValue(temps, temps)
                 if res:
-                    data.update({i: res})
-
-            #file.write(title+'\n')
+                    values = data.get(prop).append(val, item)
+                    data.update({prop: values})
 
             if limit == count:
                 break
+
     return data
 
 def extractValue(p_id, temps):
