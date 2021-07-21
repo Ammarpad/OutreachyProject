@@ -23,10 +23,13 @@ def main(limit):
                         namespaces=[0],
                         total=limit)
 
-    data = getData(pages, limit)
+    allData = getData(pages, limit)
 
-    # Push to repo
-    result = common.addMultipleClaims(data, PAGE_NUM_ID, check_value=False, summary='')
+    # Push all to the repo
+    for prop in ALL_PROPS:
+        data = allData[prop]
+        result = common.addMultipleClaims(data, prop, check_value=False, summary='')
+
     print(f"Finished. Updated {result['added']} items, {result['skipped']} were skipped")
 
 def getPageNum(templates):
@@ -76,14 +79,14 @@ def checkClaims(claimIDs, page):
         item = page.data_item()
     except pywikibot.exceptions.NoPage:
         # Pretend it does if we don't even have data item
-        return True
+        return []
 
     res = list()
     for claimID in claimIDs:
         if claimID not in item.get()['claims']:
             res.append(claimID)
 
-    return res
+    return res, item
 
 def getData(pages, limit):
     data = list()
@@ -101,22 +104,30 @@ def getData(pages, limit):
             if title in titles:
                 continue
 
-            ids = checkClaims(ALL_PROPS):
-            if ids == True or ids == []:
+            ids, item = checkClaims(ALL_PROPS, page):
+            if ids == [] or ids[0] == []:
                 continue
 
-            file.write(title+'\n')
-    
             temps = page.raw_extracted_templates
-            page_num = getPageNum(temps)
-            file.write(title+'\n')
-            if page_num:
-                data.append([page_num, page.data_item()])
-                count += 1
+            for i in ids[0]:
+                res = extractValue(temps, temps)
+
+                if res:
+                    data.update({i: res})
+
+            #file.write(title+'\n')
 
             if limit == count:
                 break
     return data
+
+def extractValue(p_id, temps):
+    if p_id == PAGE_NUM_ID:
+        return getPageNum(temps)
+    elif p_id == OCLC_ID:
+        return getPageNum(temps)
+    elif p_id in (ISBN_13 ISBN_10)
+        return getISBN(temps)
 
 def sparql_query():
     """SPARQL query alternative"""
