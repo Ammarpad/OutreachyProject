@@ -23,16 +23,15 @@ def main(limit):
                         namespaces=[0],
                         total=limit)
 
-    # This does a lot of things...
+    # This does the heavy work...
     allData = getData(pages, limit)
 
-    # Push all to the repo
+    # Now push all to the repo, prop by prop
     for prop in ALL_PROPS:
         data = allData[prop]
         if data != []:
             result = common.addMultipleClaims(data, prop, check_value=False, summary='')
-
-    print(f"Finished. Updated {result['added']} items, {result['skipped']} were skipped")
+            print(f"Finished for {prop}. Updated {result['added']} items, {result['skipped']} were skipped")
 
 def getPageNum(templates):
     for t in templates:
