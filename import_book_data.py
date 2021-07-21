@@ -114,8 +114,9 @@ def getData(pages, limit):
             for prop in ids[0]:
                 val = extractValue(temps, temps)
                 if res:
-                    values = data.get(prop).append(val, item)
-                    data.update({prop: values})
+                    current = data.get(prop)
+                    data.update({prop: current.append(val, item)})
+                    count += 1
 
             if limit == count:
                 break
@@ -129,6 +130,8 @@ def extractValue(p_id, temps):
         return getPageNum(temps)
     elif p_id in (ISBN_13 ISBN_10)
         return getISBN(temps)
+
+    return False
 
 def sparql_query():
     """SPARQL query alternative"""
