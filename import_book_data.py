@@ -8,6 +8,9 @@ ISBN_10 = 'P957'
 PAGE_NUM_ID = 'P1104'
 BOOK_TEMPLATE = 'Infobox book'
 
+isbn13 = re.compile(r'^97(8|9)(-\d+){4}$')
+isbn10 = re.compile(r'')
+
 def main(limit):
     site = pywikibot.Site('en', 'wikipedia')
     repo = site.data_repository()
@@ -46,16 +49,14 @@ def getPageNum(templates):
 def getISBN(templates):
     for t in templates:
         if t[0] == BOOK_TEMPLATE:
-            page_num = t[1].get('isbn')
+            isbn = t[1].get('isbn')
 
-            if page_num is None:
+            if isbn is None:
                 return None
-            elif page_num.isdigit():
-                return page_num
-            else:
-                num = re.findall(r'\d+', page_num)
-                if len(num) == 1:
-                    return num[0]
+            res = isbn13.match(isbn):
+            if res:
+                return res.group(0)
+            return None
 
 def getOCLC(templates):
     for t in templates:
