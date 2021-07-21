@@ -7,6 +7,7 @@ ISBN_13 = 'P212'
 ISBN_10 = 'P957'
 PAGE_NUM_ID = 'P1104'
 BOOK_TEMPLATE = 'Infobox book'
+ISBN_ID = { 10: ISBN_10, 13: ISBN_13 }
 # For basic validation of structure for both ISBN- 10 and 13
 RE_ISBN = re.compile(r'^(97(8|9))?\d{9}(\d|X)$', re.I)
 
@@ -51,7 +52,10 @@ def getISBN(templates):
             isbn = t[1].get('isbn')
             if isbn:
                 isbn = isbn.strip()
-                return isbn if RE_ISBN.match(isbn.replace('-', '')) else None
+                raw = isbn.replace('-', '')
+                return isbn, ISBN_ID.get(len(raw), 0) if RE_ISBN.match(raw) else None
+
+        return None
 
 def getOCLC(templates):
     for t in templates:
