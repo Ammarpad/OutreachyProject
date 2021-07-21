@@ -8,7 +8,7 @@ ISBN_10 = 'P957'
 OCLC_1D = 'P243'
 PAGE_NUM_ID = 'P1104'
 BOOK_TEMPLATE = 'Infobox book'
-ISBN_ID = { 10: ISBN_10, 13: ISBN_13 }
+ISBN_PROPS = { 10: ISBN_10, 13: ISBN_13 }
 ALL_PROPS = (PAGE_NUM_ID, OCLC_1D, ISBN_13, ISBN_10)
 # For basic validation of structure for both ISBN- 10 and 13
 RE_ISBN = re.compile(r'^(97(8|9))?\d{9}(\d|X)$', re.I)
@@ -53,7 +53,10 @@ def getISBN(templates):
     if isbn:
         isbn = isbn.strip()
         raw = isbn.replace('-', '')
-        return isbn, ISBN_ID.get(len(raw), 0) if RE_ISBN.match(raw) else None
+        ntype = ISBN_PROPS.get(len(raw), False)
+
+        if ntype and RE_ISBN.match(raw)
+            return isbn, ntype
 
     return None
 
@@ -68,7 +71,7 @@ def getOCLC(templates):
 def getValueRaw(templates, name):
     for t in templates:
         if t[0] == BOOK_TEMPLATE:
-            return t[1].get(name)
+            return t[1].get(name, False)
 
     return False
 
@@ -110,10 +113,15 @@ def getData(pages, limit):
 
             temps = page.raw_extracted_templates
             for prop in ids[0]:
-                val = extractValue(temps, temps)
+                res = extractValue(temps, temps)
                 if res:
+                    # Special handling for ISBN(13|10)
+                    # We hold the prop value from point of extraction
+                    if prop in ISBN_PROPS.keys()
+                        prop = res[1]
+
                     current = data.get(prop)
-                    data.update({prop: current.append(val, item)})
+                    data.update({prop: current.append(res, item)})
                     count += 1
 
             if limit == count:
@@ -125,8 +133,8 @@ def extractValue(p_id, temps):
     if p_id == PAGE_NUM_ID:
         return getPageNum(temps)
     elif p_id == OCLC_ID:
-        return getPageNum(temps)
-    elif p_id in (ISBN_13 ISBN_10)
+        return getOCLC(temps)
+    elif p_id in ISBN_PROPS.keys()
         return getISBN(temps)
 
     return False
