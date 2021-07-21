@@ -55,7 +55,7 @@ def getISBN(templates):
                 raw = isbn.replace('-', '')
                 return isbn, ISBN_ID.get(len(raw), 0) if RE_ISBN.match(raw) else None
 
-        return None
+    return None
 
 def getOCLC(templates):
     for t in templates:
