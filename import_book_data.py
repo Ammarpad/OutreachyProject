@@ -92,7 +92,25 @@ def checkClaims(claimIDs, page):
     return res, item
 
 def getData(pages, limit):
+    """
+    Initialize `data` dict with the properties that we will work on.
+    This dictionary will be returned with all the data collected so
+    far, meticulously arranged in the following format:
+
+        data = {
+            prop1: [ [ val, item ], [ val, item ] ],
+            prop2: [ [ val, item ], [ val, item ] ],
+            prop3: [ [ val, item ], [ val, item ] ]
+        }
+
+    `val` are the actual values extracted from various operations on
+    pages. Each val has corresponding data item object witch is where
+    it belongs on the repo (the data item of the source wiki page).
+    The prop key are the property ids where the data belong.
+
+    """
     data = dict.fromkeys(ALL_PROPS, [])
+
     path = os.path.dirname(__file__) + '/__local__/P1104_titles.txt'
     count = 0
 
