@@ -48,5 +48,7 @@ def main(limit):
     print('Finished. Updated %s items' %count)
 
 if __name__ == '__main__':
-    limit = int(sys.argv[1])
-    main(limit)
+    if len(sys.argv) < 2:
+        sys.exit('Limit is required')
+
+    main(int(sys.argv[1]))
