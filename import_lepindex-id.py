@@ -20,7 +20,7 @@ def main(limit):
         title = page.title()
 
         try:
-            data_item = pywikibot.ItemPage.fromPage(page)
+            item = pywikibot.ItemPage.fromPage(page)
         except:
             print('Skipping %s, because no data item found.' %title)
             continue
@@ -31,6 +31,7 @@ def main(limit):
 
         templates = page.raw_extracted_templates
         lepId = None
+
         for t in templates:
             if t[0].lower() == 'lepindex':
                 for key, value in t[1].items():
@@ -39,7 +40,8 @@ def main(limit):
                             lepId = str(value)
                             break
         if lepId:
-            common.addSingleClaim(data_item, LEPINDEX_ID, lepId, **args)
+            common.addSingleClaim(item, LEPINDEX_ID, lepId, **args)
+            print('Updated %s. [ID: %s]' % (item.title(), lepId))
             count += 1
 
         if limit == count:
