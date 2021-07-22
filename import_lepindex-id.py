@@ -11,22 +11,22 @@ def main(limit):
     site = pywikibot.Site('en', 'wikipedia')
     cat = pywikibot.Category(site, 'LepIndex ID not in Wikidata')
     repo = site.data_repository()
-    summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot 3|Adding LepIndex]])'
+    summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot 3|Adding LepIndex ID]])'
     args = {'summary': summary, 'check_value': False, 'add_ref': True}
     pages = pagegenerators.CategorizedPageGenerator(cat, recurse=False)
     count = 0
 
     for page in pages:
-        t = page.title()
+        title = page.title()
 
         try:
             data_item = pywikibot.ItemPage.fromPage(page)
         except:
-            print('Skipping %s, because no data item found.' %t)
+            print('Skipping %s, because no data item found.' %title)
             continue
 
         if LEPINDEX_ID in data_item.get()['claims']:
-            print('Claim already exists for %s... skipping now.' %t)
+            print('Claim already exists for %s... skipping now.' %title)
             continue
 
         templates = page.raw_extracted_templates
@@ -36,7 +36,7 @@ def main(limit):
                 for key, value in t[1].items():
                     if key.lower() == 'id':
                         if value.isdecimal():
-                            lepId = value
+                            lepId = str(value)
                             break
         if lepId:
             common.addSingleClaim(data_item, LEPINDEX_ID, lepId, **args)
