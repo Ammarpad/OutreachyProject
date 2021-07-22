@@ -11,9 +11,11 @@ def main(limit):
     site = pywikibot.Site('en', 'wikipedia')
     cat = pywikibot.Category(site, 'LepIndex ID not in Wikidata')
     repo = site.data_repository()
+    summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot 3|Adding LepIndex]])'
+    args = {'summary': summary, 'check_value': False, 'add_ref': True}
+    pages = pagegenerators.CategorizedPageGenerator(cat, recurse=False)
     count = 0
 
-    pages = pagegenerators.CategorizedPageGenerator(cat, recurse=False)
     for page in pages:
         try:
             data_item = pywikibot.ItemPage.fromPage(page)
@@ -31,7 +33,7 @@ def main(limit):
                             lepId = value
                             break
         if lepId:
-            common.addSingleClaim(data_item, LEPINDEX_ID, lepId, check_value=False, add_ref=True)
+            common.addSingleClaim(data_item, LEPINDEX_ID, lepId, **args)
             count += 1
 
         if limit == count:
