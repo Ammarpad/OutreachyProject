@@ -25,7 +25,7 @@ def main(limit):
             print('Skipping %s, because no data item found.' %title)
             continue
 
-        if LEPINDEX_ID in data_item.get()['claims']:
+        if LEPINDEX_ID in item.get()['claims']:
             print('Claim already exists for %s... skipping now.' %title)
             continue
 
