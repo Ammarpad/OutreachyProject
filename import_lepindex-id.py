@@ -17,10 +17,16 @@ def main(limit):
     count = 0
 
     for page in pages:
+        t = page.title()
+
         try:
             data_item = pywikibot.ItemPage.fromPage(page)
         except:
-            print('Skipping %s, no data item found' % page.title())
+            print('Skipping %s, because no data item found.' %t)
+            continue
+
+        if LEPINDEX_ID in data_item.get()['claims']:
+            print('Claim already exists for %s... skipping now.' %t)
             continue
 
         templates = page.raw_extracted_templates
