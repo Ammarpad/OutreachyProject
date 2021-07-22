@@ -1,13 +1,13 @@
 #!/usr/local/bin/python3
 
-import re
+import re, sys
 import common
 import pywikibot
 from pywikibot import pagegenerators
 
 LEPINDEX_ID = 'P3064'
 
-def main():
+def main(limit):
     site = pywikibot.Site('en', 'wikipedia')
     cat = pywikibot.Category(site, 'LepIndex ID not in Wikidata')
     repo = site.data_repository()
@@ -29,11 +29,16 @@ def main():
                     if key.lower() == 'id':
                         if value.isdecimal():
                             lepId = value
+                            break
         if lepId:
             common.addSingleClaim(data_item, LEPINDEX_ID, lepId, check_value=False, add_ref=True)
             count += 1
 
+        if limit == count:
+            break
+
     print('Finished. Updated %s items' %count)
 
 if __name__ == '__main__':
-    main()
+    limit = int(sys.argv[1])
+    main(limit)
