@@ -1,7 +1,11 @@
 #!/usr/local/bin/python3
 
-import re, os, io, sys
-import common, pywikibot
+import re
+import os
+import io
+import sys
+import common
+import pywikibot
 
 ISBN_13 = 'P212'
 ISBN_10 = 'P957'

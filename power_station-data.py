@@ -22,13 +22,9 @@ def main(limit):
     result = processPages(pages)
     print('Finished. Updated %s items, %s were skipped.' %({result['added']}{result['skipped']}))
 
-
-
-
-
 def processPages(pages):
 	pass
-	
+
 if __name__ == '__main__':
     limit = int(sys.argv[1])
     main(limit)

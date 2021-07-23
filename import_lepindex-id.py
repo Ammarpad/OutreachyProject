@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
 
-import re, sys
+import re
+import sys
 import common
 import pywikibot
 from pywikibot import pagegenerators
