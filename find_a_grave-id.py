@@ -29,9 +29,14 @@ def main(limit):
 
     	count += processPage(page, item)
 
+    	if count == limit:
+    		break
 
-def processPage(page):
-	def getRelevantTemp(templates):
+
+def processPage(page, item):
+	def getRelevantVal(templates):
+		value = None
+
 		while templates:
 			# Start from the last templates because the template
 			# we care about here is typically found at the end or
@@ -41,15 +46,13 @@ def processPage(page):
 			title = template.title().lower().replace(' ', '')
 
 			if title == FAG_NAME:
+				value = template[1]
 				break
 
-		return template
+		return value
 
 	templates = page.templatesWithParams()
-	temp = getRelevantTemp(templates) 
+	value = getRelevantVal(templates)
 
-	if not temp:
-		return
-
-
-
+	if value and value != []:
+		pass
