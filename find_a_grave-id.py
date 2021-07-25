@@ -1,5 +1,7 @@
 #!/usr/local/bin/python3
 
+import re
+import sys
 import common
 import pywikibot
 from pywikibot import pagegenerators
@@ -55,4 +57,14 @@ def processPage(page, item):
 	value = getRelevantVal(templates)
 
 	if value and value != []:
-		pass
+		value = value[0]
+		
+		if re.match(r'^[0-9]*$', value)
+			common.addSingleClaim(item, FAG_ID, value, **args)
+			return 1
+
+	return 0
+
+		
+if __name__ == '__main__':
+	main()
