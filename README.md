@@ -11,7 +11,7 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 1. **official\_website.py**
 	- This module extracts official website links from Wikipedia article and add them to corresponding data item of the page on the repo. This module uses [BeautifulSoup library][2] apart from the standard requirments. It does not validate that the url is actually working, but it does ensure that it is valid URL in structure.
 2. **twitter\_username.py**
-	- This module primarily extracts Twitter usernames of subjects from Wikipedia page, or set of pages, and then use the username to extract its corresponding numeric id from Twitter. The username is then exported to Wikidata as [Twitter username][P2002] claim, and the numeric id as [Numeric id][P6552] qualifier
+	- This module primarily extracts Twitter usernames of subjects from Wikipedia page, or set of pages, and then use the username to extract its corresponding numeric id from Twitter. The username is then exported to Wikidata as [Twitter username][P2002] claim, and the numeric identifier as [Numeric id][P6552] qualifier. This module requires Twitter [developer API key][3] to work fully correctly. 
 3. **mb\_release\_group\_data.py**
 	- This module currently extracts and processes [MusicBrainz release group identifier][P436]
 4. **lepindex-id.py**
@@ -27,8 +27,9 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 
 [1]: https://github.com/Ammarpad/OutreachyProposal
 [2]: https://pypi.org/project/beautifulsoup4/
-[3]: https://www.nhm.ac.uk/our-science/data/lepindex/intro.html
-[4]: https://en.wikipedia.org/wiki/Category:LepIndex_ID_not_in_Wikidata
+[3]: https://developer.twitter.com/en/docs/twitter-api/getting-started/getting-access-to-the-twitter-api
+[4]: https://www.nhm.ac.uk/our-science/data/lepindex/intro.html
+[5]: https://en.wikipedia.org/wiki/Category:LepIndex_ID_not_in_Wikidata
 
 [mike]: https://mikepeel.net
 [pyw]: https://github.com/wikimedia/pywikibot
