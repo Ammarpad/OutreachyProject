@@ -19,7 +19,7 @@ def main(limit):
     count = 0
 
     for page in pages:
-    	title = page.title()
+        title = page.title()
 
         try:
             item = ItemPage.fromPage(page)
@@ -31,50 +31,50 @@ def main(limit):
             print('Claim already exists for %s... skipping now.' %title)
             continue
 
-		count += processPage(page, item, summary)
+        count += processPage(page, item, summary)
 
-    	if count == limit:
-    		break
+        if count == limit:
+            break
 
     print('Finished in %s. Updated %s items' %count)
 
 def processPage(page, item, summary):
-	def getRelevantVal(templates):
-		value = None
+    def getRelevantVal(templates):
+        value = None
 
-		while templates:
-			# Start from the last templates because the template
-			# we care about here is typically found at the end or
-			# near the end of a page
-			template = templates.pop()
-			# normalize title for comparison
-			title = template.title().lower().replace(' ', '')
+        while templates:
+            # Start from the last templates because the template
+            # we care about here is typically found at the end or
+            # near the end of a page
+            template = templates.pop()
+            # normalize title for comparison
+            title = template.title().lower().replace(' ', '')
 
-			if title == FAG_NAME:
-				value = template[1]
-				break
+            if title == FAG_NAME:
+                value = template[1]
+                break
 
-		return value
+        return value
 
-	print('Processing %s' %page.title())
+    print('Processing %s' %page.title())
 
-	templates = page.templatesWithParams()
-	value = getRelevantVal(templates)
+    templates = page.templatesWithParams()
+    value = getRelevantVal(templates)
 
-	if value and value != []:
-		value = value[0].strip()
+    if value and value != []:
+        value = value[0].strip()
 
-		if re.match(r'^[0-9]*$', value):
-			args = {}
-			common.addSingleClaim(
-				item, FAG_ID, value,
-				summary=summary, check_value=False, add_ref=True)
+        if re.match(r'^[0-9]*$', value):
+            args = {}
+            common.addSingleClaim(
+                item, FAG_ID, value,
+                summary=summary, check_value=False, add_ref=True)
 
-			return 1
+            return 1
 
-	return 0
+    return 0
 
 if __name__ == '__main__':
-	if len(sys.argv) > 1:
-		limit = int(sys.argv[1])
-		main(limit)
+    if len(sys.argv) > 1:
+        limit = int(sys.argv[1])
+        main(limit)
