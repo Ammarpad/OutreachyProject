@@ -1,4 +1,4 @@
-# OutreachyProject
+## OutreachyProject
 ##### See [OutreachyProposal][1] for background.
 
 This repository is a collection of python modules written as work for Outreachy internship with Wikimedia Foundation with guidance of [Mike Peel][mike], the mentor.
@@ -35,5 +35,9 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 [P436]: https://www.wikidata.org/wiki/Property:P436
 [P243]: https://www.wikidata.org/wiki/Property:P243
 [P1104]: https://www.wikidata.org/wiki/Property:P1104
+
+
+## LICENSE
+The code in this responsitory is made available under the [MIT LICENSE](LICENSE)
 
 * _[Navigate interactively at sourcegraph](https://sourcegraph.com/github.com/Ammarpad/OutreachyProject/)_
