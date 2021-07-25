@@ -36,6 +36,7 @@ def main(limit):
     	if count == limit:
     		break
 
+    print('Finished for')
 
 def processPage(page, item, summary):
 	def getRelevantVal(templates):
@@ -54,6 +55,8 @@ def processPage(page, item, summary):
 				break
 
 		return value
+
+	print('Processing %s' page.title())
 
 	templates = page.templatesWithParams()
 	value = getRelevantVal(templates)
