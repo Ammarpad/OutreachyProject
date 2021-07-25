@@ -38,6 +38,6 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 
 
 ## LICENSE
-The code in this responsitory is made available under the [MIT LICENSE](LICENSE)
+The code in this responsitory is made available under the [MIT LICENSE](LICENSE.md)
 
 * _[Navigate interactively at sourcegraph](https://sourcegraph.com/github.com/Ammarpad/OutreachyProject/)_
