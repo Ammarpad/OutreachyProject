@@ -36,7 +36,7 @@ def main(limit):
     	if count == limit:
     		break
 
-    print('Finished. Update %s items' %count)
+    print('Finished in %s. Updated %s items' %count)
 
 def processPage(page, item, summary):
 	def getRelevantVal(templates):
