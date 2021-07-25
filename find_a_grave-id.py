@@ -40,7 +40,7 @@ def main(limit):
 
 def processPage(page, item, summary):
     def getRelevantVal(templates):
-        value = None
+        arguments = None
 
         while templates:
             # Start from the last templates because the template
@@ -51,18 +51,17 @@ def processPage(page, item, summary):
             title = template.title(with_ns=False).lower().replace(' ', '')
 
             if title == FAG_NAME:
-                value = arguments[0] if len(arguments) else ''
                 break
 
-        return value
+        return arguments
 
     print('Processing %s' %page.title())
 
     templates = page.templatesWithParams()
-    value = getRelevantVal(templates)
+    args = getRelevantVal(templates)
 
-    if value and value != '':
-        value = value.strip()
+    if args and args != []:
+        value = args[0].strip()
 
         if re.match(r'^[0-9]*$', value):
             common.addSingleClaim(
