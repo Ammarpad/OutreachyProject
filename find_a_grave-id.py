@@ -14,6 +14,8 @@ def main(limit):
     cat = pywikibot.Category(site, 'Find a Grave template with ID not in Wikidata')
     repo = site.data_repository()
     pages = pagegenerators.CategorizedPageGenerator(cat, recurse=False)
+    summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot $|Adding Find A Grave ID]])'
+    args = {'summary': summary, 'check_value': False, 'add_ref': True}
     count = 0
 
     for page in pages:
@@ -29,13 +31,13 @@ def main(limit):
             print('Claim already exists for %s... skipping now.' %title)
             continue
 
-    	count += processPage(page, item)
+		count += processPage(page, item, summary)
 
     	if count == limit:
     		break
 
 
-def processPage(page, item):
+def processPage(page, item, summary):
 	def getRelevantVal(templates):
 		value = None
 
@@ -62,6 +64,7 @@ def processPage(page, item):
 		# Basic validation. Valid value is a numeric
 		# string 1-9 but will never have leading zero
 		if re.match(r'^(0|[1-9][0-9]*)$', value)
+			args = {'summary': summary, 'check_value': False, 'add_ref': True}
 			common.addSingleClaim(item, FAG_ID, value, **args)
 			return 1
 
