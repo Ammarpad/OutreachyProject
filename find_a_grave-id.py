@@ -31,7 +31,8 @@ def main(limit):
             print('Claim already exists for %s... skipping now.' %title)
             continue
 
-        count += processPage(page, item, summary)
+        res = processPage(page, item, summary)
+        count += int(res)
 
         if count == limit:
             break
@@ -68,9 +69,9 @@ def processPage(page, item, summary):
                 item, FAG_ID, value,
                 summary=summary, check_value=False, add_ref=True)
 
-            return 1
+            return True
 
-    return 0
+    return False
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
