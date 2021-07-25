@@ -61,9 +61,7 @@ def processPage(page, item, summary):
 	if value and value != []:
 		value = value[0].strip()
 
-		# Basic validation. Valid value is a numeric
-		# string 1-9 but will never have leading zero
-		if re.match(r'^(0|[1-9][0-9]*)$', value)
+		if re.match(r'^[0-9]*$', value)
 			args = {'summary': summary, 'check_value': False, 'add_ref': True}
 			common.addSingleClaim(item, FAG_ID, value, **args)
 			return 1
