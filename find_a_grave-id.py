@@ -62,8 +62,11 @@ def processPage(page, item, summary):
 		value = value[0].strip()
 
 		if re.match(r'^[0-9]*$', value)
-			args = {'summary': summary, 'check_value': False, 'add_ref': True}
-			common.addSingleClaim(item, FAG_ID, value, **args)
+			args = {}
+			common.addSingleClaim(
+				item, FAG_ID, value,
+				summary=summary, check_value=False, add_ref=True)
+
 			return 1
 
 	return 0
