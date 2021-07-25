@@ -57,14 +57,15 @@ def processPage(page, item):
 	value = getRelevantVal(templates)
 
 	if value and value != []:
-		value = value[0]
-		
-		if re.match(r'^[0-9]*$', value)
+		value = value[0].strip()
+
+		# Basic validation. Valid value is a numeric
+		# string 1-9 but will never have leading zero
+		if re.match(r'^(0|[1-9][0-9]*)$', value)
 			common.addSingleClaim(item, FAG_ID, value, **args)
 			return 1
 
 	return 0
 
-		
 if __name__ == '__main__':
 	main()
