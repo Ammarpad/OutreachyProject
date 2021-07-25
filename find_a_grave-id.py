@@ -75,5 +75,6 @@ def processPage(page, item, summary):
 	return 0
 
 if __name__ == '__main__':
-	limit = int(sys.argv[1])
-    main(limit)
+	if len(sys.argv) > 1:
+		limit = int(sys.argv[1])
+		main(limit)
