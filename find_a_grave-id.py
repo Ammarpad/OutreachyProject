@@ -4,7 +4,7 @@ import re
 import sys
 import common
 import pywikibot
-from pywikibot import pagegenerators
+from pywikibot import ( ItemPage, pagegenerators )
 
 FAG_ID = 'P535'
 FAG_NAME = 'findagrave'
@@ -22,7 +22,7 @@ def main(limit):
     	title = page.title()
 
         try:
-            item = pywikibot.ItemPage.fromPage(page)
+            item = ItemPage.fromPage(page)
         except:
             print('Skipping %s, because no data item found.' %title)
             continue
