@@ -36,7 +36,7 @@ def main(limit):
         if count == limit:
             break
 
-    print('Finished in %s. Updated %s items' %count)
+    print('Finished. Updated %s items' %count)
 
 def processPage(page, item, summary):
     def getRelevantVal(templates):
@@ -46,12 +46,12 @@ def processPage(page, item, summary):
             # Start from the last templates because the template
             # we care about here is typically found at the end or
             # near the end of a page
-            template = templates.pop()
+            template, arguments = templates.pop()
             # normalize title for comparison
-            title = template.title().lower().replace(' ', '')
+            title = template.title(with_ns=False).lower().replace(' ', '')
 
             if title == FAG_NAME:
-                value = template[1]
+                value = arguments[0] if len(arguments) else ''
                 break
 
         return value
@@ -61,11 +61,10 @@ def processPage(page, item, summary):
     templates = page.templatesWithParams()
     value = getRelevantVal(templates)
 
-    if value and value != []:
-        value = value[0].strip()
+    if value and value != '':
+        value = value.strip()
 
         if re.match(r'^[0-9]*$', value):
-            args = {}
             common.addSingleClaim(
                 item, FAG_ID, value,
                 summary=summary, check_value=False, add_ref=True)
