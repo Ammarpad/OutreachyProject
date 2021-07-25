@@ -56,7 +56,7 @@ def processPage(page, item, summary):
 
 		return value
 
-	print('Processing %s' page.title())
+	print('Processing %s' %page.title())
 
 	templates = page.templatesWithParams()
 	value = getRelevantVal(templates)
@@ -64,7 +64,7 @@ def processPage(page, item, summary):
 	if value and value != []:
 		value = value[0].strip()
 
-		if re.match(r'^[0-9]*$', value)
+		if re.match(r'^[0-9]*$', value):
 			args = {}
 			common.addSingleClaim(
 				item, FAG_ID, value,
