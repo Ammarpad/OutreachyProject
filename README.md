@@ -20,6 +20,7 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
     - This modules can be used to extract and export multiple value statements from wikipedia articles about books to Wikidata. Presently it can process a single page or list of pages and primarily extract either one, two or all of these: [OCLC number][P243], [ISBN number][Q33057] (both 10 and 13) as well as [Number of pages][P1104]. There's a basic validation for each value extracted to reduce chance of invalid values.
 6. **power_stations.py**
 7. **find\_a\_grave-id.py**
+ 	- This modules works with [Find a Grave][7] dentifier. This value is also extravyed from Wikipedia and basic validation is applied. The value is then exported to the corresponfing item of the wiki page as a [Find A Grave memorial ID ][P535] claim statement.
 8. **Next**
 9. **Next**
 10. **Next**
@@ -31,10 +32,12 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 [4]: https://en.wikipedia.org/wiki/Category:MusicBrainz_release_group_not_in_Wikidata
 [5]: https://www.nhm.ac.uk/our-science/data/lepindex/intro.html
 [6]: https://en.wikipedia.org/wiki/Category:LepIndex_ID_not_in_Wikidata
+[7]: https://www.findagrave.com/memorial
 
 [mike]: https://mikepeel.net
 [pyw]: https://github.com/wikimedia/pywikibot
 [Q33057]: https://www.wikidata.org/wiki/Q33057
+[P535]: https://www.wikidata.org/wiki/Property:P535
 [P436]: https://www.wikidata.org/wiki/Property:P436
 [P243]: https://www.wikidata.org/wiki/Property:P243
 [P1104]: https://www.wikidata.org/wiki/Property:P1104
