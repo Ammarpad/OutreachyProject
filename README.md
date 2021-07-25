@@ -11,6 +11,7 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 1. **official\_website.py**
 	- This module extracts official website links from Wikipedia article and add them to corresponding data item of the page on the repo. This module uses [BeautifulSoup library][2] apart from the standard requirments. It does not validate that the url is actually working, but it does ensure that it is valid URL in structure.
 2. **twitter\_username.py**
+	- This module primarily extracts Twitter usernames of subjects from Wikipedia page, or set of pages, and then use the username to extract its corresponding numeric id from Twitter. The username is then exported to Wikidata as [Twitter username][P2002] claim, and the numeric id as [Numeric id][P6552] qualifier
 3. **mb\_release\_group\_data.py**
 	- This module currently extracts and processes [MusicBrainz release group identifier][P436]
 4. **lepindex-id.py**
@@ -35,6 +36,8 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 [P436]: https://www.wikidata.org/wiki/Property:P436
 [P243]: https://www.wikidata.org/wiki/Property:P243
 [P1104]: https://www.wikidata.org/wiki/Property:P1104
+[P6552]: https://www.wikidata.org/wiki/Property:P6552
+[P2002]: https://www.wikidata.org/wiki/Property:P2002
 
 
 ## LICENSE
