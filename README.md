@@ -1,6 +1,8 @@
 ## OOUTREACHY PROJECT
 ##### See [OutreachyProposal][1] for background.
 
+*NOTE: This is still a work in progress. If you see a bug or something wrong please do let me know. Thanks*
+
 This repository is a collection of python modules written as work for Outreachy internship with Wikimedia Foundation with guidance of [Mike Peel][mike], the mentor.
 
 Development (is) being done with Python 3.8.0 and master branch of [Pywikibot package][pyw]. Some modules may requires additional libraries, where such is the case, is noted in the brief module note below.
