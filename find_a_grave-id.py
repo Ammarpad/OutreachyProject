@@ -77,7 +77,7 @@ def processPage(page, item, summary):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        sys.exit('Limit is required. O means no limit')
+        sys.exit('Limit is required. -1 means no limit')
 
     limit = int(sys.argv[1])
     main(limit)
