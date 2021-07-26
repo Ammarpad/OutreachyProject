@@ -34,7 +34,9 @@ def main(limit):
         res = processPage(page, item, summary)
         count += int(res)
 
-        if count == limit:
+        if limit == -1:
+            continue
+        elif count == limit:
             break
 
     print('Finished. Updated %s items' %count)
@@ -44,7 +46,7 @@ def processPage(page, item, summary):
         arguments = None
 
         while templates:
-            # Start from the last templates because the template
+            # Start from the last template because the template
             # we care about here is typically found at the end or
             # near the end of a page
             template, arguments = templates.pop()
@@ -75,7 +77,7 @@ def processPage(page, item, summary):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        sys.exit('Limit is required')
+        sys.exit('Limit is required. O means no limit')
 
     limit = int(sys.argv[1])
     main(limit)
