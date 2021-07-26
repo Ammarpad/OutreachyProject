@@ -21,6 +21,7 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 5. **book\_data.py**
     - This modules can be used to extract and export multiple value statements from wikipedia articles about books to Wikidata. Presently it can process a single page or list of pages and primarily extract either one, two or all of these: [OCLC number][P243], [ISBN number][Q33057] (both 10 and 13) as well as [Number of pages][P1104]. There's a basic validation for each value extracted to reduce chance of invalid values.
 6. **power_stations.py**
+	- This modules extracts data from articles about Power stations on Wikipedia.
 7. **find\_a\_grave-id.py**
 	- This modules works with [Find a Grave][7] dentifier. This value is also extracted from Wikipedia and basic validation is applied. The value is then exported to the corresponfing item of the wiki page as a [Find A Grave memorial ID ][P535] claim statement. It, by default, loops this [relevant category][8] on English Wikipedia
 8. **Next**
