@@ -7,8 +7,8 @@ import pywikibot
 from datetime import datetime
 from pywikibot.exceptions import APIError, Error
 
-site = pywikibot.Site('en', 'wikipedia')
-repo = site.data_repository()
+SITE = pywikibot.Site('en', 'wikipedia')
+REPO = site.data_repository()
 
 def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True):
     """
@@ -58,7 +58,7 @@ def addReference(item_id, claim_id, ref_type, value):
     @param ref_type: the ref form (reference URL, stated in, etc)
     @param value: value of the reference
     """
-    item = pywikibot.ItemPage(repo, item_id)
+    item = pywikibot.ItemPage(REPO, item_id)
     claims = item.get()['claims']
     claim = claims.get(claim_id)[0] or None
 
@@ -66,7 +66,7 @@ def addReference(item_id, claim_id, ref_type, value):
         return 0
 
     try:
-        reference = pywikibot.Claim(repo, ref_type)
+        reference = pywikibot.Claim(REPO, ref_type)
         reference.setTarget(value)
         claim.addSource(reference, summary='Adding reference.')
         return 1
@@ -82,7 +82,7 @@ def addQualifier(item_id, claim_id, prop_id, target):
     @param claim_id the propety id of the claim (qualifier) to add
     @param target value of the claim
     """
-    item = pywikibot.ItemPage(repo, item_id)
+    item = pywikibot.ItemPage(REPO, item_id)
     claims = item.get()['claims']
     claim = claims.get(claim_id)[0] or None
 
@@ -90,7 +90,7 @@ def addQualifier(item_id, claim_id, prop_id, target):
         return 0
 
     try:
-        qualifier = pywikibot.Claim(repo, prop_id)
+        qualifier = pywikibot.Claim(REPO, prop_id)
         qualifier.setTarget(target)
         claim.addQualifier(qualifier, summary='Adding a qualifier.')
         return 1
@@ -113,16 +113,16 @@ def addSingleClaim(item, prop_id, value, summary, add_ref=False, check_value=Tru
     if check_value:
         value = convertValue(prop_id, value)
 
-    claim = pywikibot.Claim(repo, prop_id)
+    claim = pywikibot.Claim(REPO, prop_id)
     claim.setTarget(value)
 
     if not isinstance(item, pywikibot.ItemPage):
-        item = pywikibot.ItemPage(repo, item)
+        item = pywikibot.ItemPage(REPO, item)
 
     item.addClaim(claim, summary=summary)
 
     if add_ref:
-        page = pywikibot.Page(site, 'English Wikipedia')
+        page = pywikibot.Page(SITE, 'English Wikipedia')
         ref_item = page.data_item()
         addReference(item.title(), prop_id, 'P143', ref_item)
 
@@ -136,10 +136,10 @@ def convertValue(prop_id, value):
     @param prop_id
     @param value
     """
-    datatype = pywikibot.PropertyPage(repo, prop_id).type
+    datatype = pywikibot.PropertyPage(REPO, prop_id).type
     
     if datatype == 'wikibase-item':
-        value = pywikibot.ItemPage(repo, value)
+        value = pywikibot.ItemPage(REPO, value)
     elif datatype == 'commonsMedia':
         commons = pywikibot.Site('commons', 'commons')
         value = pywikibot.FilePage(commons, value)
