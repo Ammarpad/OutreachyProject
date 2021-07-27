@@ -44,7 +44,7 @@ def doImport(limit):
             break
 
     common.recordPages(no_data_item, 'missing-data-items-list')
-    result = common.addMultipleClaims(data, OFFICIAL_WEBSITE_ID, summary=summary check_value=False)
+    result = common.addMultipleClaims(data, OFFICIAL_WEBSITE_ID, summary=summary, check_value=False)
 
     print('Finished. Updated %s items, %s were skipped' %(result['added'], result['skipped']))
 
