@@ -8,7 +8,7 @@ from datetime import datetime
 from pywikibot.exceptions import APIError, Error
 
 SITE = pywikibot.Site('en', 'wikipedia')
-REPO = site.data_repository()
+REPO = SITE.data_repository()
 
 def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True):
     """
