@@ -26,7 +26,7 @@ def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True
     @param summary: Optional edit summary to use
     @param ref: Whether to add P143 as reference
     @param check_value: Whether the data type of value should
-           be cheked and converted as necessarry.
+           be checked and converted where necessary.
     @return dictionary with the keys mentioned above
     """
     added = skipped = 0
@@ -51,6 +51,7 @@ def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True
 def addReference(item_id, claim_id, ref_type, value):
     """
     This adds new qualifier to an existing claim
+
     @param item_id: entity id where to do the work
     @param prop_id: the propety id of the claim to add qualifier on
     @param claim_id: the propety id of the claim (qualifier) to add
@@ -75,7 +76,7 @@ def addReference(item_id, claim_id, ref_type, value):
 def addQualifier(item_id, claim_id, prop_id, target):
     """
     This adds new qualifier to an existing claim
-    @param repo DataSite
+
     @param item_id entity id where to do the work
     @param prop_id the propety id of the claim to add qualifier on
     @param claim_id the propety id of the claim (qualifier) to add
@@ -106,7 +107,7 @@ def addSingleClaim(item, prop_id, value, summary, add_ref=False, check_value=Tru
     @param value The claim to add
     @param summary Edit summary
      @param check_value: Whether the data type of value should
-           be cheked and converted as necessarry.
+           be checked and converted as necessary.
     @raises pywikibot.Error on unknown datatype
     """
     if check_value:
@@ -131,6 +132,7 @@ def addSingleClaim(item, prop_id, value, summary, add_ref=False, check_value=Tru
 def convertValue(prop_id, value):
     """
     Convert value to appropriate type to prepare for insertion
+
     @param prop_id
     @param value
     """
