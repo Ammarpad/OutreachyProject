@@ -23,7 +23,7 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 6. **power_stations.py**
 	- This modules extracts data from articles about Power stations on Wikipedia.
 7. **find\_a\_grave-id.py**
-	- This modules works with [Find a Grave][7] dentifier. This value is also extracted from Wikipedia and basic validation is applied. The value is then exported to the corresponfing item of the wiki page as a [Find A Grave memorial ID ][P535] claim statement. It, by default, loops this [relevant category][8] on English Wikipedia
+	- This modules works with [Find a Grave][7] dentifier. The relevant value is also extracted from Wikipedia and basic validation is applied. It is then exported to the corresponfing item of the wiki page as a [Find A Grave memorial ID ][P535] claim statement. The script, by default, loops through this [relevant category][8] on English Wikipedia
 8. **Next**
 9. **Next**
 10. **Next**
