@@ -15,6 +15,7 @@ def doImport(limit):
     site = pywikibot.Site('en', 'wikipedia')
     cat = pywikibot.Category(site, cat)
     repo = site.data_repository()
+    summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot 2|Add website]])'
     data = list()
     no_data_item = list()
 
@@ -43,7 +44,7 @@ def doImport(limit):
             break
 
     common.recordPages(no_data_item, 'missing-data-items-list')
-    result = common.addMultipleClaims(data, OFFICIAL_WEBSITE_ID, check_value=False)
+    result = common.addMultipleClaims(data, OFFICIAL_WEBSITE_ID, summary=summary check_value=False)
 
     print('Finished. Updated %s items, %s were skipped' %(result['added'], result['skipped']))
 
