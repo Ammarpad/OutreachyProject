@@ -66,6 +66,8 @@ def extractWeblink(page):
 
     url = re.findall(URL_REGEX, str(items))[0].rstrip('/').strip()
 
+    # Ensure url has scheme from here, because lack of it will prevent saving the edit.
+    # Fallback to HTTP if there's none
     if not url.startswith('https://') and not url.startswith('http://')
         value = 'http://' + url
 
