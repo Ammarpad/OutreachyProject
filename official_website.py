@@ -64,7 +64,12 @@ def extractWeblink(page):
     if not items or len(items) != 1:
         return None
 
-    url = re.findall(URL_REGEX, str(items))[0].rstrip('/').strip()
+    res = re.findall(URL_REGEX, str(items))
+
+    if len(res):
+        url = res[0].rstrip('/').strip()
+    else:
+        return None
 
     # Ensure url has scheme from here, because lack of it will prevent saving the edit.
     # Fallback to HTTP if there's none
