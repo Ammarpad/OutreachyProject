@@ -64,7 +64,12 @@ def extractWeblink(page):
     if not items or len(items) != 1:
         return None
 
-    return re.findall(URL_REGEX, str(items))[0].rstrip('/')
+    url = re.findall(URL_REGEX, str(items))[0].rstrip('/').strip()
+
+    if not url.startswith('https://') and not url.startswith('http://')
+        value = 'http://' + url
+
+    return url
 
 if __name__ == '__main__':
     limit = int(sys.argv[1])
