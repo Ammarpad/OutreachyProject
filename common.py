@@ -146,7 +146,7 @@ def convertValue(prop_id, value):
     elif datatype == 'globe-coordinate':
         value = pywikibot.Coordinate(value[0], value[1])
     elif datatype == 'quantity':
-        value = pywikibot.WbQuantity(value, site=repo)
+        value = pywikibot.WbQuantity(value, site=REPO)
     elif datatype == 'time':
         form = len(value.split())
         if form == 3:
