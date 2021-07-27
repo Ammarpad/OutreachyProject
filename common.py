@@ -5,6 +5,7 @@ Set of common reusable functions
 """
 import pywikibot
 from datetime import datetime
+from requests.exceptions import ReadTimeout
 from pywikibot.exceptions import APIError, Error
 
 SITE = pywikibot.Site('en', 'wikipedia')
@@ -45,6 +46,10 @@ def addMultipleClaims(items, prop_id, summary='', add_ref=True, check_value=True
             skipped += 1
             qid = page_item.title()
             print('Error: Adding claim to %s failed: %s' % (qid, str(e)))
+        except ReadTimeout:
+            skipped += 1
+            print('Timeout error while working on %s [%s]' %(qid, str(e)))
+            continue
 
     return {'added': added, 'skipped': skipped, 'pages': pages}
 
