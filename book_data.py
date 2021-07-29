@@ -88,11 +88,21 @@ def checkClaims(claimIDs, page):
         item = page.data_item()
     except pywikibot.exceptions.NoPageError:
         # Pretend it does if we don't even have data item
-        item = []
+        return [],[]
+
+    claims = item.get()['claims']
+
+    P31 = claims['P31'] if 'P31' in claims else None
+
+    if len(P31):
+        instance = P31[0].toJSON()
+        i_item = instance['mainsnak']['datavalue']['value']['item']
+        if int(i_item.get('numeric-id')) != 571 # Q571
+            return [],[]
 
     res = list()
     for claimID in claimIDs:
-        if claimID not in item.get()['claims']:
+        if claimID not in data['claims']:
             res.append(claimID)
 
     return res, item
