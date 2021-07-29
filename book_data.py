@@ -83,7 +83,9 @@ def getValueRaw(templates, name):
 
 def checkClaims(claimIDs, page):
     """Checks the repo to find if any of or all
-    of these claims already exist on the item"""
+    of these claims already exist on the item.
+    This will also check if the item is of the
+    right instance for the modifications"""
     try:
         item = page.data_item()
     except pywikibot.exceptions.NoPageError:
