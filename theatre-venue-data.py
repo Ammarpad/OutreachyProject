@@ -7,7 +7,7 @@ import pywikibot
 from pywikibot import ( ItemPage, pagegenerators )
 
 CAPACITY_ID = 'P1083'
-TEMP_NAME = 'Infobox venue'
+TEMP_NAME = 'infobox venue'
 
 def main(limit):
     site = pywikibot.Site('en', 'wikipedia')
@@ -20,3 +20,4 @@ def main(limit):
     	'namespaces': [0], 'total': limit }
     
     pages = page.getReferences( **args )
+    redirects = [page.title(with_ns=False).lower() for page in pages.backlinks(filter_redirects=True)]

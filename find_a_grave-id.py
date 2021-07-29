@@ -14,7 +14,7 @@ def main(limit):
     cat = pywikibot.Category(site, 'Find a Grave template with ID not in Wikidata')
     repo = site.data_repository()
     pages = pagegenerators.CategorizedPageGenerator(cat, recurse=False)
-    summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot $|Adding Find A Grave ID]])'
+    summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot 5|Adding Find A Grave ID]])'
     args = {'summary': summary, 'check_value': False, 'add_ref': True}
     count = 0
 
