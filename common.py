@@ -188,7 +188,7 @@ def checkInstance(ids, item):
     otherwise return False
 
     """
-    ids = list(ids)
+    ids = ids if isinstance(ids, list) else [ids]
     ids = [ int(i.lstrip('Q')) for i in ids ]
     P31 = claims['P31'] if 'P31' in claims else []
 
