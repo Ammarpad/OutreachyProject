@@ -181,6 +181,17 @@ def convertValue(prop_id, value):
 
     return value
 
+def checkInstance(ids, claims):
+    if len(claims):
+        P31 = claims['P31'] if 'P31' in claims else []
+
+        if len(P31):
+            instance = P31[0].toJSON()
+            i_item = instance['mainsnak']['datavalue']['value']['item']
+            #'book (Q571)', 'version, edition, or translation (Q3331189)'
+            if int(i_item.get('numeric-id')) not in (ids):
+                return False
+    return False
 def recordPages(titles, file_name):
     """
     Write list of titles to the file_name.
