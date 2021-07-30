@@ -31,6 +31,9 @@ def main(limit):
             print('Claim already exists for %s... skipping now.' %title)
             continue
 
+        if not checkInstance('Q5'):
+            continue
+
         res = processPage(page, item, summary)
         count += int(res)
 
