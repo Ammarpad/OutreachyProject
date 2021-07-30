@@ -181,7 +181,13 @@ def convertValue(prop_id, value):
 
     return value
 
-def checkInstance(ids, claims):
+def checkInstance(ids, item):
+    """
+    Check the value of an instance (Q5) of an item.
+    if the value is in the list of `ids`, return True
+    otherwise return False
+
+    """
     ids = list(ids)
     ids = [ int(i.lstrip('Q')) for i in ids ]
     P31 = claims['P31'] if 'P31' in claims else []
