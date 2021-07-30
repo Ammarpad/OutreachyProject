@@ -183,16 +183,17 @@ def convertValue(prop_id, value):
 
 def checkInstance(ids, claims):
     ids = list(ids)
-    ids = [ int(i.rstrip('Q')) for i in ids ]
+    ids = [ int(i.lstrip('Q')) for i in ids ]
     P31 = claims['P31'] if 'P31' in claims else []
 
     if len(P31):
         instance = P31[0].toJSON()
         item = instance['mainsnak']['datavalue']['value']['item']
-        if int(item.get('numeric-id')) not in (ids):
-            return False
+        if int(item.get('numeric-id')) in ids:
+            return True
 
     return False
+
 def recordPages(titles, file_name):
     """
     Write list of titles to the file_name.
