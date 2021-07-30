@@ -100,7 +100,7 @@ def checkClaims(claimIDs, page):
         instance = P31[0].toJSON()
         i_item = instance['mainsnak']['datavalue']['value']['item']
         #'book (Q571)', 'version, edition, or translation (Q3331189)'
-        if int(i_item.get('numeric-id')) not in (571, 3331189)
+        if int(i_item.get('numeric-id')) not in (571, 3331189):
             return [],[]
 
     res = list()
