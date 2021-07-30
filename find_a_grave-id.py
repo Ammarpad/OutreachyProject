@@ -27,11 +27,12 @@ def main(limit):
             print('Skipping %s, because no data item found.' %title)
             continue
 
-        if FAG_ID in item.get()['claims']:
+        claims = item.get()['claims']
+        if FAG_ID in claims:
             print('Claim already exists for %s... skipping now.' %title)
             continue
 
-        if not checkInstance('Q5'):
+        if not checkInstance('Q5', claims):
             continue
 
         res = processPage(page, item, summary)
