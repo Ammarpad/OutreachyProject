@@ -94,7 +94,7 @@ def checkClaims(claimIDs, page):
 
     claims = item.get()['claims']
 
-    P31 = claims['P31'] if 'P31' in claims else None
+    P31 = claims['P31'] if 'P31' in claims else []
 
     if len(P31):
         instance = P31[0].toJSON()
