@@ -21,9 +21,8 @@ def main(limit):
     for page in pages:
         title = page.title()
 
-        try:
-            item = ItemPage.fromPage(page)
-        except:
+        item = common.getDataItem(page)
+        if not item:
             print('Skipping %s, because no data item found.' %title)
             continue
 
