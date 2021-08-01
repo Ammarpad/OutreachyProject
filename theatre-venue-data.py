@@ -26,9 +26,9 @@ def main(limit):
 
 
     for page in pages:
-		res = processPage(page, redirects)
+		res = processPage(page, redirects, summary)
 
-def processPage(page, redirects):
+def processPage(page, redirects, summary):
 	# Affix the canonical name of the template at the beginning
 	# since it will be matched more than the redirects
 	temp_titles = redirects[:0] = [TEMP_NAME]
@@ -49,7 +49,7 @@ def processPage(page, redirects):
 	return True
 
 
-def updateRepo(page value):
+def updateRepo(page, value, summary):
 	title = page.title()
 	item = common.getDataItem(page)
 
@@ -61,11 +61,10 @@ def updateRepo(page value):
         print('Claim already exists for %s... skipping now.' %title)
         return False
 
+    args = {'summary':summary, 'check_value':False, 'add_ref':True}
+    common.addSingleClaim(item, CAPACITY_ID, value, **args)
+
     return True
-
-
-
-
 
 if __name__ == '__main__':
 	main()
