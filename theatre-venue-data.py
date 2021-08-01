@@ -32,7 +32,7 @@ def main(limit):
         if res is True:
             count =+ 1
 
-    print('Processed %s pages in total' %count)
+    print('Updated %s items in total' %count)
 
 def processPage(page, redirects, summary):
     # Affix the canonical name of the template at the beginning
@@ -56,7 +56,7 @@ def processPage(page, redirects, summary):
             value = re.match(r'[\d,]+', value)
             if not value:
                 return False
-
+            print(value)
         quantity = pywikibot.WbQuantity(value[0], site=common.REPO)
         res = updateRepo(page, quantity, summary)
         return res
@@ -77,7 +77,7 @@ def updateRepo(page, value, summary):
         return False
 
     args = {'summary':summary, 'check_value':False, 'add_ref':True}
-   # common.addSingleClaim(item, CAPACITY_ID, value, **args)
+    common.addSingleClaim(item, CAPACITY_ID, value, **args)
 
     return True
 
