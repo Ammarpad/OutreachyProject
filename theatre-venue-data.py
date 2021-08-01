@@ -9,7 +9,7 @@ from pywikibot import ( ItemPage, pagegenerators )
 CAPACITY_ID = 'P1083'
 TEMP_NAME = 'infobox venue'
 
-def main(limit):
+def main():
     site = pywikibot.Site('en', 'wikipedia')
     repo = site.data_repository()
     page = pywikibot.Page(site, TEMP_NAME, ns=10)
@@ -82,4 +82,7 @@ def updateRepo(page, value, summary):
     return True
 
 if __name__ == '__main__':
-	main()
+	try:
+		main()
+	except KeyboardInterrupt
+		print('Quitted')
