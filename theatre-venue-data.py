@@ -83,7 +83,7 @@ def updateRepo(page, value, summary):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        sys.exit('Limit is required. -1 means no limit')
+        sys.exit('Limit is required')
 
     try:
         limit = int(sys.argv[1])
