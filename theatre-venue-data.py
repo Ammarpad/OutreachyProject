@@ -51,7 +51,7 @@ def processPage(page, redirects, summary):
             break
 
     if value is not None:
-        if not value.isdecimal()
+        if not value.isdecimal():
             value = value.replace(',','')
             value = re.match(r'[\d,]+', value)
             if not value:
