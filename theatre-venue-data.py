@@ -20,4 +20,12 @@ def main(limit):
     	'namespaces': [0], 'total': limit }
     
     pages = page.getReferences( **args )
-    redirects = [page.title(with_ns=False).lower() for page in pages.backlinks(filter_redirects=True)]
+    backlinks = page.backlinks(filter_redirects=True)
+    redirects = [link.title(with_ns=False).lower() for link in backlinks]
+
+
+    for page in pages:
+		res = processPage()
+
+def processPage(page):
+	pass
