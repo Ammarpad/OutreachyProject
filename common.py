@@ -207,6 +207,14 @@ def checkInstance(ids, item):
     return False
 
 def getDataItem(page):
+    """
+    Get data item without NoPageError exception
+    None is returned if the exception occurs
+
+    @param page: pyikibot.Page the wiki page
+    @return pywikibot.ItemPage or None
+    """
+
     item = None
     with suppress(NoPageError):
         item = pywikibot.ItemPage.fromPage(page)
