@@ -45,7 +45,7 @@ def processPage(page, redirects):
 	return True
 
 
-def exportValue(item, value):
+def updateRepo(item, value):
 	pass
 
 
