@@ -47,7 +47,7 @@ def processPage(page, redirects, summary):
 			break
 
 	if value is not None:
-		value = value
+		value = pywikibot.WbQuantity(value, site=common.REPO)
 		res = updateRepo(item, value, summary):
 		return res
 
