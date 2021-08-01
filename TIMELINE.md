@@ -3,7 +3,7 @@
 *Original May 2021. Revised July 12, 2021*
 
 - Project title: Synchronising Wikidata and Wikipedias using pywikibot
-- Project description: [Project details on phabricator](https://phabricator.wikimedia.org/T276329)
+- Project description: [Details on Phabricator](https://phabricator.wikimedia.org/T276329)
 - Organization: [Wikimedia Foundation](https://wikimediafoundation.org/)
 - Mentor: [Mike Peel](http://www.mikepeel.net/)
 
