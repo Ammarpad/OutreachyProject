@@ -200,6 +200,14 @@ def checkInstance(ids, item):
 
     return False
 
+def getDataItem(page):
+    try:
+        item = pywikibot.ItemPage.fromPage(page)
+    except:
+        item = None
+
+    return item
+
 def recordPages(titles, file_name):
     """
     Write list of titles to the file_name.
