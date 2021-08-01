@@ -56,7 +56,7 @@ def processPage(page, redirects, summary):
             value = re.match(r'[\d,]+', value)
             if not value:
                 return False
-            print(value)
+
         quantity = pywikibot.WbQuantity(value[0], site=common.REPO)
         res = updateRepo(page, quantity, summary)
         return res
