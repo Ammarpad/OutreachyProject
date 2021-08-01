@@ -4,9 +4,15 @@
 Set of common reusable functions
 """
 import pywikibot
+
 from datetime import datetime
+from contextlib import suppress
 from requests.exceptions import ReadTimeout
-from pywikibot.exceptions import APIError, Error
+from pywikibot.exceptions import (
+    Error,
+    APIError,
+    NoPageError,
+)
 
 SITE = pywikibot.Site('en', 'wikipedia')
 REPO = SITE.data_repository()
@@ -201,10 +207,9 @@ def checkInstance(ids, item):
     return False
 
 def getDataItem(page):
-    try:
+    item = None
+    with suppress(NoPageError):
         item = pywikibot.ItemPage.fromPage(page)
-    except:
-        item = None
 
     return item
 
