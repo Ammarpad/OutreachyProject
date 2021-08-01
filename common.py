@@ -226,7 +226,7 @@ def getDataItem(page, verbose=False):
         item = pywikibot.ItemPage.fromPage(page)
 
     if verbose and not item:
-        print('Skipping %s, no data item found' % page.title())
+        print('Skipping %s, no data item found.' % page.title())
 
     return item
 
