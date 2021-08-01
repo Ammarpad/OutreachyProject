@@ -17,7 +17,8 @@ def main(limit):
     args = {
     	'follow_redirects': False, 
     	'only_template_inclusion': True, 
-    	'namespaces': [0], 'total': limit }
+		'namespaces': [0], 'total': limit
+    }
     
     pages = page.getReferences( **args )
     backlinks = page.backlinks(filter_redirects=True)
@@ -39,14 +40,28 @@ def processPage(page, redirects):
     while True:
 		temp = templates.pop()
 		if temp[0].title().lower() in temp_titles:
-			value = temp[1].get('seating_capacity')
+			value = temp[1].get('seating_capacity', None)
 			break
+
+	if value is not None:
+		res = updateRepo(item, value):
 
 	return True
 
 
-def updateRepo(item, value):
-	pass
+def updateRepo(page value):
+	title = page.title()
+	item = common.getDataItem(page)
+
+	if item == None:
+		print('Skipping %s, because no data item found.' %title)
+		return False
+
+    if CAPACITY_ID in item.get()['claims']:
+        print('Claim already exists for %s... skipping now.' %title)
+        return False
+
+    return True
 
 
 
