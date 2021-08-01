@@ -193,6 +193,10 @@ def checkInstance(ids, item):
     if the value is in the list of `ids`, return True
     otherwise return False
 
+    @param ids: list|string of ids
+    @param item: pywikibot.ItemPage
+    @return bool
+
     """
     ids = ids if isinstance(ids, list) else [ids]
     ids = [ int(i.lstrip('Q')) for i in ids ]
