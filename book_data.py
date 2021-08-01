@@ -175,7 +175,7 @@ def extractValue(prop, temps):
     elif prop in ISBN_PROPS.keys():
         return getISBN(temps)
 
-    return False
+    raise Exception('Unsupported prop %s' %prop)
 
 def sparql_query():
     """SPARQL query alternative"""
