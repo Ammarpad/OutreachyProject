@@ -215,7 +215,9 @@ def getDataItem(page, verbose=False):
     Get data item without NoPageError exception
     None is returned if the exception occurs
 
-    @param page: pyikibot.Page the wiki page
+    @param page: pyikibot.Page, the wiki page
+    @param verbose: bool, whether to print a
+        message to stdout when there's no item
     @return pywikibot.ItemPage or None
     """
 
