@@ -47,9 +47,11 @@ def processPage(page, redirects, summary):
 			break
 
 	if value is not None:
-		res = updateRepo(item, value):
+		value = value
+		res = updateRepo(item, value, summary):
+		return res
 
-	return res
+	return False
 
 
 def updateRepo(page, value, summary):
