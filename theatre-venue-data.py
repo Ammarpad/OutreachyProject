@@ -32,19 +32,20 @@ def processPage(page, redirects):
 	# since it will be matched more than the redirects
 	temp_titles = redirects[:0] = [TEMP_NAME]
 
-	templates = page.templatesWithParams()
-    templates.reversed()
+	templates = page.raw_extracted_templates
+    # Operate on reversed list to get the infobox template faster
+    templates.reverse()
 
     while True:
 		temp = templates.pop()
 		if temp[0].title().lower() in temp_titles:
-
+			value = temp[1].get('seating_capacity')
 			break
 
+	return True
 
 
-
-
+def exportValue(item, value):
 	pass
 
 
