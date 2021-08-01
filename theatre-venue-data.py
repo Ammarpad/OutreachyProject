@@ -47,7 +47,8 @@ def processPage(page, redirects, summary):
     while True:
         temp = templates.pop()
         if temp[0].title().lower() in temp_titles:
-            value = temp[1].get('seating_capacity', None)
+            value = temp[1].get('seating_capacity', None) \
+                or temp[1].get('capacity', None)
             break
 
     if value is not None:
