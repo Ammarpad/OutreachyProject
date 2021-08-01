@@ -9,7 +9,7 @@ from pywikibot import ( ItemPage, pagegenerators )
 CAPACITY_ID = 'P1083'
 TEMP_NAME = 'infobox venue'
 
-def main():
+def main(limit):
     site = pywikibot.Site('en', 'wikipedia')
     repo = site.data_repository()
     page = pywikibot.Page(site, TEMP_NAME, ns=10)
@@ -58,7 +58,7 @@ def processPage(page, redirects, summary):
                 return False
 
         quantity = pywikibot.WbQuantity(value[0], site=common.REPO)
-        res = updateRepo(item, quantity, summary):
+        res = updateRepo(item, quantity, summary)
         return res
 
     return False
@@ -77,12 +77,16 @@ def updateRepo(page, value, summary):
         return False
 
     args = {'summary':summary, 'check_value':False, 'add_ref':True}
-    common.addSingleClaim(item, CAPACITY_ID, value, **args)
+   # common.addSingleClaim(item, CAPACITY_ID, value, **args)
 
     return True
 
 if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        sys.exit('Limit is required. -1 means no limit')
+
     try:
-        main()
-    except KeyboardInterrupt
+        limit = int(sys.argv[1])
+        main(limit)
+    except KeyboardInterrupt:
         print('Quitted')
