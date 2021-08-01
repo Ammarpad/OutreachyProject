@@ -58,7 +58,7 @@ def processPage(page, redirects, summary):
                 return False
 
         quantity = pywikibot.WbQuantity(value[0], site=common.REPO)
-        res = updateRepo(item, quantity, summary)
+        res = updateRepo(page, quantity, summary)
         return res
 
     return False
