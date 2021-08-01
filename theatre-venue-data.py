@@ -25,7 +25,31 @@ def main(limit):
 
 
     for page in pages:
-		res = processPage()
+		res = processPage(page, redirects)
 
-def processPage(page):
+def processPage(page, redirects):
+	# Affix the canonical name of the template the beginning
+	# since it will be matched more than the redirects
+	temp_titles = redirects[:0] = [TEMP_NAME]
+
+	templates = page.templatesWithParams()
+    templates.reversed()
+
+    while True:
+		temp = templates.pop()
+		if temp[0].title().lower() in [ TEMP_NAME or in redirects:
+			v
+			break
+
+
+
+
+
 	pass
+
+
+
+
+
+if __name__ == '__main__':
+	main()
