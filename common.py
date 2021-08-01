@@ -210,7 +210,7 @@ def checkInstance(ids, item):
 
     return False
 
-def getDataItem(page):
+def getDataItem(page, verbose=False):
     """
     Get data item without NoPageError exception
     None is returned if the exception occurs
@@ -222,6 +222,9 @@ def getDataItem(page):
     item = None
     with suppress(NoPageError):
         item = pywikibot.ItemPage.fromPage(page)
+
+    if verbose and not item:
+        print('Skipping %s, no data item found' % page.title())
 
     return item
 

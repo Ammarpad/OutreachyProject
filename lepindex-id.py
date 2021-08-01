@@ -20,9 +20,8 @@ def main(limit):
     for page in pages:
         title = page.title()
 
-        item = common.getDataItem(page)
+        item = common.getDataItem(page, verbose=True)
         if item is None:
-            print('Skipping %s, no data item found' % page.title())
             continue
 
         if LEPINDEX_ID in item.get()['claims']:
