@@ -28,6 +28,11 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 	- This modules extracts data from Wikipedia articles about stadia, arenas, other sporting venues, as well as theatres and cinemas.
 9. **Next**
 10. **Next**
+11. **Next**
+12. **Next**
+13. **Next**
+14. **Next**
+15. **Next**
 
 
 [1]: https://github.com/Ammarpad/OutreachyProposal
