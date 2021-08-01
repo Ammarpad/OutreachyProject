@@ -19,7 +19,7 @@ def main(limit):
     	'only_template_inclusion': True, 
 		'namespaces': [0], 'total': limit
     }
-    
+    count = 0
     pages = page.getReferences( **args )
     backlinks = page.backlinks(filter_redirects=True)
     redirects = [link.title(with_ns=False).lower() for link in backlinks]
@@ -27,6 +27,8 @@ def main(limit):
 
     for page in pages:
 		res = processPage(page, redirects, summary)
+		if res is True:
+			count =+ 1
 
 def processPage(page, redirects, summary):
 	# Affix the canonical name of the template at the beginning
@@ -36,6 +38,7 @@ def processPage(page, redirects, summary):
 	templates = page.raw_extracted_templates
     # Operate on reversed list to get the infobox template faster
     templates.reverse()
+    value = None
 
     while True:
 		temp = templates.pop()
@@ -46,7 +49,7 @@ def processPage(page, redirects, summary):
 	if value is not None:
 		res = updateRepo(item, value):
 
-	return True
+	return res
 
 
 def updateRepo(page, value, summary):
