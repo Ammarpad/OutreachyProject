@@ -20,10 +20,9 @@ def main(limit):
     for page in pages:
         title = page.title()
 
-        try:
-            item = pywikibot.ItemPage.fromPage(page)
-        except:
-            print('Skipping %s, because no data item found.' %title)
+        item = common.getDataItem(page)
+        if item is None:
+            print('Skipping %s, no data item found' % page.title())
             continue
 
         if LEPINDEX_ID in item.get()['claims']:

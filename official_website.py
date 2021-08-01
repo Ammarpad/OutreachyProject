@@ -22,7 +22,6 @@ def doImport(limit):
     pages = pagegenerators.CategorizedPageGenerator(cat, recurse=False)
     found = 0
     for page in pages:
-
         data_item = common.getDataItem(page)
         if data_item is None:
             print('Skipping %s, no data item found' % page.title())
