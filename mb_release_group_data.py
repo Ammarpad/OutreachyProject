@@ -18,11 +18,10 @@ def doImport(limit):
     pages = pagegenerators.CategorizedPageGenerator(catObj, recurse=False)
     found = 0
     for page in pages:
-        try:
-            data_item = pywikibot.ItemPage.fromPage(page)
-        except:
+        data_item = common.getDataItem(page)
+        if data_item is None:
             print('Skipping %s, no data item found' % page.title())
-            no_data.append(page.title())
+            no_data_item.append(page.title())
             continue
 
         group_id = getLink(page)
