@@ -26,9 +26,13 @@ def main(limit):
 
 
     for page in pages:
+		print('Processing %s' %page.title())
+
 		res = processPage(page, redirects, summary)
 		if res is True:
 			count =+ 1
+
+	print('Processed %s pages in total' %count)
 
 def processPage(page, redirects, summary):
 	# Affix the canonical name of the template at the beginning
