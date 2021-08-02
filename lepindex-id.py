@@ -17,6 +17,12 @@ def main(limit):
     pages = pagegenerators.CategorizedPageGenerator(cat, recurse=False)
     count = 0
 
+    def tempValues(temps):
+        for t in temps:
+            if t[0].lower() == 'lepindex':
+                return t[1].items()
+        return list()
+
     for page in pages:
         title = page.title()
 
@@ -30,14 +36,14 @@ def main(limit):
 
         templates = page.raw_extracted_templates
         lepId = None
+        values = tempValues(templates)
 
-        for t in templates:
-            if t[0].lower() == 'lepindex':
-                for key, value in t[1].items():
-                    if key.lower() == 'id':
-                        if value.isdecimal():
-                            lepId = str(value)
-                            break
+        for key, value in values:
+            if key.lower() == 'id':
+                if value.isdecimal():
+                    lepId = str(value)
+                    break
+
         if lepId:
             common.addSingleClaim(item, LEPINDEX_ID, lepId, **args)
             print('Updated %s. [ID: %s]' % (item.title(), lepId))
