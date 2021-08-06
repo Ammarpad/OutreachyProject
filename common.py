@@ -187,14 +187,14 @@ def convertValue(prop_id, value):
 
     return value
 
-def checkInstance(ids, item):
+def checkInstance(ids, claims):
     """
     Check the value of an instance (Q5) of an item.
     if the value is in the list of `ids`, return True
     otherwise return False
 
     @param ids: list|string of ids
-    @param item: pywikibot.ItemPage
+    @param claims: pywikibot.page._collections.ClaimCollection
     @return bool
 
     """
