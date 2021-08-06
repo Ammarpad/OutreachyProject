@@ -77,5 +77,8 @@ def extractWeblink(page):
     return url
 
 if __name__ == '__main__':
+    if len(sys.argv) <  2:
+        sys.exit('Limit is required')
+
     limit = int(sys.argv[1])
     doImport(limit)
