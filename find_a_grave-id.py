@@ -74,9 +74,8 @@ def processPage(page, item, summary):
                 item, FAG_ID, value,
                 summary=summary, check_value=False, add_ref=True)
             
-            page = pywikibot.Page(SITE, 'English Wikipedia')
-            perma_link = ''
-            common.addReference(item.title(), FAG_ID, 'P4656', perma_link)
+            permalink = page.permalink(with_protocol = True)
+            common.addReference(item.title(), FAG_ID, 'P4656', permalink)
 
             return True
 
