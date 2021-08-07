@@ -189,7 +189,7 @@ def convertValue(prop_id, value):
 
 def checkInstance(ids, claims):
     """
-    Check the value of an instance (Q5) of an item.
+    Check the value of an instance (example: Q5) of an item.
     if the value is in the list of `ids`, return True
     otherwise return False
 
