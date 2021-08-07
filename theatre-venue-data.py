@@ -67,10 +67,9 @@ def processPage(page, redirects, summary):
 
 def updateRepo(page, value, summary):
     title = page.title()
-    item = common.getDataItem(page)
+    item = common.getDataItem(page, verbose=True)
 
     if item == None:
-        print('Skipping %s, because no data item found.' %title)
         return False
 
     if CAPACITY_ID in item.get()['claims']:
