@@ -21,9 +21,8 @@ def main(limit):
     for page in pages:
         title = page.title()
 
-        item = common.getDataItem(page)
+        item = common.getDataItem(page, verbose=True)
         if not item:
-            print('Skipping %s, because no data item found.' %title)
             continue
 
         claims = item.get()['claims']
