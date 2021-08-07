@@ -22,7 +22,9 @@ def doImport(limit):
     pages = pagegenerators.CategorizedPageGenerator(cat, recurse=False)
     found = 0
     for page in pages:
+        title = page.title()
         data_item = common.getDataItem(page, verbose=True)
+
         if data_item is None:
             no_data_item.append(page.title())
             continue
@@ -34,9 +36,9 @@ def doImport(limit):
                 continue
             data.append([website, data_item])
             found += 1
-            print('Found %s for %s (%s):' %(website, page.title(), data_item.title()))
+            print('Found %s for %s (%s):' %(website, title, data_item.title()))
         else:
-            print('Failed for %s' %page.title())
+            print('Failed for %s' %title)
 
         if found == limit:
             break
