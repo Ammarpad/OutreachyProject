@@ -7,6 +7,7 @@ import pywikibot
 from pywikibot import ( ItemPage, pagegenerators )
 
 FAG_ID = 'P535'
+WM_IMPORT_URL = 'P4656'
 FAG_NAME = 'findagrave'
 
 def main(limit):
@@ -74,7 +75,7 @@ def processPage(page, item, summary):
                 summary=summary, check_value=False, add_ref=True)
             
             permalink = page.permalink(with_protocol = True)
-            common.addReference(item.title(), FAG_ID, 'P4656', permalink)
+            common.addReference(item.title(), FAG_ID, WM_IMPORT_URL, permalink)
 
             return True
 
