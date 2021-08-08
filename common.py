@@ -204,7 +204,7 @@ def checkInstance(ids, claims):
 
     if len(P31):
         instance = P31[0].toJSON()
-        item = instance['mainsnak']['datavalue']['value']['item']
+        item = instance['mainsnak']['datavalue']['value']
         if int(item.get('numeric-id')) in ids:
             return True
 
