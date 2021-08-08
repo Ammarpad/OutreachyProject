@@ -2,3 +2,4 @@
 *$py.class
 __local__/
 __pycache__/
+.DS_Store
