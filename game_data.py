@@ -12,7 +12,8 @@ GAME_MODE_PROP_ID = 'P404'
 
 
 
-
+def main():
+	pass
 
 
 
@@ -20,3 +21,5 @@ def extractMode(page):
 	pass
 
 
+if __name__ == '__main__':
+	main()
