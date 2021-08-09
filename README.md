@@ -27,7 +27,7 @@ Development (is) being done with Python 3.8.0 and master branch of [Pywikibot pa
 8. **theatre-venue-data.py**
 	- This modules extracts data from Wikipedia articles about stadia, arenas, other sporting venues, as well as theatres and cinemas.
 9. **world\_football\_dot\_net.py**
-10. **Next**
+10. **nft_data.py**
 11. **Next**
 12. **Next**
 13. **Next**
