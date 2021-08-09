@@ -11,7 +11,7 @@ TEMPLATE = 'Infobox video game'
 def main():
     site = pywikibot.Site('en', 'wikipedia')
     repo = site.data_repository()
-    page = pywikibot.Page(site, TEMPLATE, ns=10)
+    temp = pywikibot.Page(site, TEMPLATE, ns=10)
     summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot $|Add maximum capacity]])'
     all_pages = page.getReferences(
         follow_redirects = False,
@@ -19,13 +19,31 @@ def main():
         namespaces = [0],
         total = 100
     )
-    backlinks = page.backlinks(filter_redirects=True)
-    redirects = [link.title(with_ns=False).lower() for link in backlinks]
+    
+    processPages(all_pages)
+
+
+def processPages(pages):
+    def getRedirects(p):
+        backlinks = p.backlinks(filter_redirects=True)
+        redirects = list()
+        
+        for link in backlinks:
+            redirects.append(link.title(with_ns=False).lower())
+        
+        return redirects
+
+    redr = getRedirects(templatePage)
+
+
+    for page in pages:
+        pass
 
 
 
-def extractMode(page):
-    pass
+def extractMode(page, templatePage):
+
+    
 
 
 if __name__ == '__main__':
