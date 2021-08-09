@@ -33,16 +33,19 @@ def processPages(pages):
         
         return redirects
 
-    redr = getRedirects(templatePage)
+    redirects = getRedirects(templatePage)
 
 
     for page in pages:
-        pass
+        mode = extractMode(page)
 
 
 
-def extractMode(page, templatePage):
-
+def extractMode(page, redirects):
+    templates = page.raw_extracted_templates
+    for (template, values) in templates:
+        if templates.title() == TEMPLATE or in redirects:
+            
     
 
 
