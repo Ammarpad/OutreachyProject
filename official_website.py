@@ -23,27 +23,37 @@ def doImport(limit):
 
     pages = pagegenerators.CategorizedPageGenerator(cat, recurse=False)
     found = 0
+    path = os.path.dirname(__file__) + '/__local__/official-website-log.txt'
+    file = open(path, mode='a+')
+    file.seek(io.SEEK_SET)
+    lines = file.readlines()
+    checkedTitles = [t.strip() for t in lines]
+
     for page in pages:
         title = page.title()
 
-        if alreadyChecked(title):
-            continue 
+        if title in titles:
+            print('%s is already checked, ...skipping' %title)
+            continue
 
         data_item = common.getDataItem(page, verbose=True)
 
         if data_item is None:
             no_data_item.append(page.title())
+            file.write(title+'\n')
             continue
 
         website = extractWeblink(page)
 
         if website:
             if isInUse(website, repo):
+                file.write(title+'\n')
                 continue
             data.append([website, data_item])
             found += 1
             print('Found %s for %s (%s):' %(website, title, data_item.title()))
         else:
+            file.write(title+'\n')
             print('Failed for %s' %title)
 
         if found == limit:
@@ -84,21 +94,7 @@ def extractWeblink(page):
 
     return url
 
-def alreadyChecked(title):
-    path = os.path.dirname(__file__) + '/__local__/official-website-log.txt'
-
-    with open(path, mode='a+') as file:
-        file.seek(io.SEEK_SET)
-        lines = file.readlines()
-        titles = [t.strip() for t in lines]
-
-        if title in titles:
-            print('%s is already checked, ...skipping' %title)
-            return True
-
-        file.write(title+'\n')
-        return False
-
+def get 
 
 if __name__ == '__main__':
     if len(sys.argv) <  2:
