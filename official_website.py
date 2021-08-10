@@ -3,6 +3,7 @@
 import re
 import sys
 import os
+import io
 import common
 import pywikibot
 from bs4 import BeautifulSoup
@@ -95,7 +96,7 @@ def alreadyChecked(title):
             print('%s is already checked. Skipping' %title)
             return True
 
-        file.write(title)
+        file.write(title+'\n')
         return False
 
 
