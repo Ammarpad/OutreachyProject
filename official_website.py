@@ -24,7 +24,7 @@ def doImport(limit):
     for page in pages:
         title = page.title()
 
-        if alreadyChecked():
+        if alreadyChecked(page):
             continue 
 
         data_item = common.getDataItem(page, verbose=True)
