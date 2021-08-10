@@ -2,6 +2,7 @@
 
 import re
 import sys
+import os
 import common
 import pywikibot
 from bs4 import BeautifulSoup
