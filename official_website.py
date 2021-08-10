@@ -90,6 +90,9 @@ def alreadyChecked(page):
         lines = file.readlines()
         titles = [t.strip() for t in lines]
 
+        if title in titles:
+            return True
+
 if __name__ == '__main__':
     if len(sys.argv) <  2:
         sys.exit('Limit is required')
