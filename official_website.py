@@ -32,7 +32,7 @@ def doImport(limit):
     for page in pages:
         title = page.title()
 
-        if title in titles:
+        if title in checkedTitles:
             print('%s is already checked, ...skipping' %title)
             continue
 
