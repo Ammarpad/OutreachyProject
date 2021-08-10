@@ -93,7 +93,7 @@ def alreadyChecked(title):
         titles = [t.strip() for t in lines]
 
         if title in titles:
-            print('%s is already checked. Skipping' %title)
+            print('%s is already checked, ...skipping' %title)
             return True
 
         file.write(title+'\n')
