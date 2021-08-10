@@ -23,6 +23,10 @@ def doImport(limit):
     found = 0
     for page in pages:
         title = page.title()
+
+        if alreadyChecked():
+            continue 
+
         data_item = common.getDataItem(page, verbose=True)
 
         if data_item is None:
@@ -77,6 +81,14 @@ def extractWeblink(page):
         value = 'http://' + url
 
     return url
+
+def alreadyChecked(page):
+    path = os.path.dirname(__file__) + '/__local__/official-website-log.txt'
+
+    with open(path, mode='a+') as file:
+        file.seek(io.SEEK_SET)
+        lines = file.readlines()
+        titles = [t.strip() for t in lines]
 
 if __name__ == '__main__':
     if len(sys.argv) <  2:
