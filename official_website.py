@@ -57,6 +57,7 @@ def doImport(limit):
             print('Failed for %s' %title)
 
         if found == limit:
+            file.close()
             break
 
     common.recordPages(no_data_item, 'missing-data-items-list')
