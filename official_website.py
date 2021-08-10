@@ -93,6 +93,10 @@ def alreadyChecked(page):
         if title in titles:
             return True
 
+        file.write(page.title())
+        return False
+
+
 if __name__ == '__main__':
     if len(sys.argv) <  2:
         sys.exit('Limit is required')
