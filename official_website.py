@@ -24,7 +24,7 @@ def doImport(limit):
     for page in pages:
         title = page.title()
 
-        if alreadyChecked(page):
+        if alreadyChecked(title):
             continue 
 
         data_item = common.getDataItem(page, verbose=True)
@@ -82,7 +82,7 @@ def extractWeblink(page):
 
     return url
 
-def alreadyChecked(page):
+def alreadyChecked(title):
     path = os.path.dirname(__file__) + '/__local__/official-website-log.txt'
 
     with open(path, mode='a+') as file:
@@ -91,9 +91,10 @@ def alreadyChecked(page):
         titles = [t.strip() for t in lines]
 
         if title in titles:
+            print('%s is already checked. Skipping' %title)
             return True
 
-        file.write(page.title())
+        file.write(title)
         return False
 
 
