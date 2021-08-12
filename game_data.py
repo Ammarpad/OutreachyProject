@@ -20,10 +20,10 @@ def main():
         total = 100
     )
     
-    processPages(all_pages)
+    processPages(all_pages, temp)
 
 
-def processPages(pages):
+def processPages(pages, temp):
     def getRedirects(p):
         backlinks = p.backlinks(filter_redirects=True)
         redirects = list()
@@ -33,7 +33,7 @@ def processPages(pages):
         
         return redirects
 
-    redirects = getRedirects(templatePage)
+    redirects = getRedirects(temp)
 
 
     for page in pages:
