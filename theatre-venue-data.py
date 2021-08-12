@@ -43,7 +43,7 @@ def processPage(page, redirects, summary):
     templates.reverse()
     value = None
 
-    while True:
+    while templates:
         temp = templates.pop()
         if temp[0].title().lower() in temp_titles:
             value = temp[1].get('seating_capacity', None) \
