@@ -13,7 +13,7 @@ def main(limit):
     site = pywikibot.Site('en', 'wikipedia')
     repo = site.data_repository()
     page = pywikibot.Page(site, TEMP_NAME, ns=10)
-    summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot $|Add maximum capacity]])'
+    summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot 6|Add maximum capacity]])'
     args = {
         'follow_redirects': False,
         'only_template_inclusion': True,
