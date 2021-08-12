@@ -37,14 +37,14 @@ def processPages(pages, temp):
 
 
     for page in pages:
-        extractMode(page)
+        extractMode(page, redirects)
 
 
 
 def extractMode(page, redirects):
     templates = page.raw_extracted_templates
     for (template, values) in templates:
-        if templates.title() == TEMPLATE or templates.title() in redirects:
+        if template.title() == TEMPLATE or template.title() in redirects:
             print(values.get('game_mode'))
 
 if __name__ == '__main__':
