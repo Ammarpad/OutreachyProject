@@ -13,7 +13,7 @@ def main():
     repo = site.data_repository()
     temp = pywikibot.Page(site, TEMPLATE, ns=10)
     summary = '([[Wikidata:Requests for permissions/Bot/AmmarBot $|Add maximum capacity]])'
-    all_pages = page.getReferences(
+    all_pages = temp.getReferences(
         follow_redirects = False,
         only_template_inclusion=False,
         namespaces = [0],
@@ -37,17 +37,15 @@ def processPages(pages):
 
 
     for page in pages:
-        mode = extractMode(page)
+        extractMode(page)
 
 
 
 def extractMode(page, redirects):
     templates = page.raw_extracted_templates
     for (template, values) in templates:
-        if templates.title() == TEMPLATE or in redirects:
-            
-    
-
+        if templates.title() == TEMPLATE or templates.title() in redirects:
+            print(values.get('game_mode'))
 
 if __name__ == '__main__':
     main()
