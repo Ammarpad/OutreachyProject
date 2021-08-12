@@ -28,8 +28,7 @@ def main(limit):
     for page in pages:
         print('Processing %s' %page.title())
 
-        res = processPage(page, redirects, summary)
-        if res is True:
+        if processPage(page, redirects, summary)
             count =+ 1
 
     print('Updated %s items in total' %count)
