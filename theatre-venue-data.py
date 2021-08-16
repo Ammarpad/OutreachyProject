@@ -52,7 +52,12 @@ def processPage(page, redirects, summary):
 
     if value is not None:
         if not value.isdecimal():
-            value = value.replace(',','')
+            tval = value.split('<', 1)[0]
+            if tval == value:
+                value = value.replace(',','')
+            else:
+                value = tval.replace(',','')
+
             value = re.match(r'[\d,]+', value)
             if not value:
                 return False
