@@ -58,11 +58,10 @@ def processPage(page, redirects, summary):
             else:
                 value = tval.replace(',','')
 
-            value = re.match(r'[\d,]+', value)
             if not value:
                 return False
 
-        quantity = pywikibot.WbQuantity(value[0], site=common.REPO)
+        quantity = pywikibot.WbQuantity(value, site=common.REPO)
         res = updateRepo(page, quantity, summary)
         return res
 
