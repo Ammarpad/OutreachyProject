@@ -52,7 +52,9 @@ def processPage(page, redirects, summary):
 
     if value is not None:
         if not value.isdecimal():
+            # Strip reference elements from the value.
             tval = value.split('<', 1)[0]
+
             if tval == value:
                 value = value.replace(',','')
             else:
