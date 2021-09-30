@@ -6,7 +6,7 @@ from pywikibot import pagegenerators
 
 def main(limit):
     language = 'be' # Belarusian
-    summary = 'fix be description; атыкулаў -> артыкулаў'
+    summary = 'fix description; атыкулаў -> артыкулаў'
     fixed_desc = 'спіс артыкулаў у адным з праектаў Вікімедыя'
 
     site = pywikibot.Site('wikidata', 'wikidata')
