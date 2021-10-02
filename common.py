@@ -79,7 +79,7 @@ def addReference(item_id, claim_id, ref_type, value):
     try:
         reference = pywikibot.Claim(REPO, ref_type)
         reference.setTarget(value)
-        claim.addSource(reference, summary='Adding reference.')
+        claim.addSource(reference, summary='')
         return 1
     except:
        return 0
