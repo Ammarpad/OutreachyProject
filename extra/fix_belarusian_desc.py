@@ -24,7 +24,7 @@ def main(limit):
         if be_desc:
             item.editDescriptions({language: fixed_desc}, summary=summary)
             count += 1
-            print(f'{count}. Fixed {item_data.title()}')
+            print(f'{count}. Fixed {item.title()}')
 
         if count == limit:
             break
