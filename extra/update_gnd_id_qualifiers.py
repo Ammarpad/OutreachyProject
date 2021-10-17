@@ -32,6 +32,8 @@ def main(limit):
                         count += 1
                         if count == limit:
                             raise StopIteration
+    except pywikibot.exceptions.APIError as e:
+        print('APIError. %s items updated. (%s)' %(count, e))
     except StopIteration:
         print('Finished. %s items updated.' %count)
     
